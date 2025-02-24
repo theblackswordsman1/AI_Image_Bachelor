@@ -1,3 +1,11 @@
+# Env (with python version supported by TensorFlow)
+py -3.10 -m venv env
+.\env\Scripts\Activate
+
+# Requirements
+pip freeze > requirements.txt
+pip install -r requirements.txt
+
 # Database
 set FLASK_APP=app.py
 flask db init
@@ -7,6 +15,5 @@ flask db upgrade
 # Delete old db if recreating
 del instance\app.db
 
-# Run app (and start env)
-.\env\Scripts\Activate
+# Run app
 python app.py

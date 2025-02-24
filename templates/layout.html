@@ -23,9 +23,9 @@
             
             <div class="collapse navbar-collapse" id="navbarNavDropdown">
                 <ul class="navbar-nav mr-auto">
-                    <!-- <li class="nav-item">
-                        <a class="nav-link" href="{{ url_for('views.home') }}">Home</a>
-                    </li> -->
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('views.binary_classification') }}">Binary Classification</a>
+                    </li>
                     {% if not session.get("current_user") %}
                         <!-- <li class="nav-item">
                             <a class="nav-link" href="{{ url_for('views.register') }}">Register</a>

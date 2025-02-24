@@ -58,3 +58,8 @@ def logout():
     flash('You have been logged out!', 'info')
     return redirect(url_for('views.home'))
 
+# Binary classification
+@views.route("/binary-classification")
+def binary_classification():
+
+    return render_template("binary_classification.html")
