@@ -5,53 +5,88 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{% block page_title %}{% endblock %} - easyAI</title>
     
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.united.css') }}">
-    <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/dark-theme.css') }}">
+    
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 </head>
 <body>
-    <nav class="navbar navbar-inverse">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="/">TensorFlow made easy!</a>
-            </div>
-
-            <div class="collapse navbar-collapse" id="myNavbar">
-              <ul class="nav navbar-nav">
-                <li><a href="{{ url_for('views.home') }}">Home</a></li>
-                <li><a href="{{ url_for('views.register') }}">Register</a></li>
-                <li><a href="{{ url_for('views.login') }}">Login</a></li>
-            </ul>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="/">TensorFlow made easy!</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                <ul class="navbar-nav mr-auto">
+                    <!-- <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('views.home') }}">Home</a>
+                    </li> -->
+                    {% if not session.get("current_user") %}
+                        <!-- <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('views.register') }}">Register</a>
+                        </li>-->
+                    {% endif %} 
+                </ul>
                 
-                
-                <ul class="nav navbar-nav navbar-right">
-                    {% if session.get("current_user") is none %}
-                        <form action="/login" method="post" class="navbar-form navbar-right">
-                            <div class="form-group">
-                                <input type="text" name="id" placeholder="User Name" class="form-control">
-                            </div>
-                            <div class="form-group">
-                                <input type="password" name="pw" placeholder="Password" class="form-control">
-                            </div>
-                            <button type="submit" class="btn btn-success">Log In</button>
-                        </form>
-                    {% else %}
-                        <li><a><b>{{ session.get("current_user") }}</b></a></li>
-                        <li><a href="{{ url_for('FUN_logout') }}"><b><u>Logout</u></b></a></li>
-                    {% endif %}
+                <!-- Login / user dropdown -->
+                <ul class="navbar-nav">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle login-link" href="#" id="userDropdown" role="button" data-toggle="dropdown">
+                            {% if session.get("current_user") %}
+                                <b>{{ session.get("current_user") }}</b>
+                            {% else %}
+                                Log In
+                            {% endif %}
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right p-3" style="min-width: 300px;">
+                            {% if session.get("current_user") %}
+                                <a class="dropdown-item" href="{{ url_for('views.logout') }}"><b>Logout</b></a>
+                            {% else %}
+                            <form method="POST" action="{{ url_for('views.login') }}">
+                                {{ form.csrf_token }}
+                                <div class="form-group">
+                                    {{ form.email.label(class="light-text") }}
+                                    {{ form.email(class="form-control", required=True) }}
+                                </div>
+                                <div class="form-group">
+                                    {{ form.password.label(class="light-text") }}
+                                    {{ form.password(class="form-control", required=True) }}
+                                </div>
+                                {{ form.submit(class="btn btn-success btn-block") }}
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item text-center" href="{{ url_for('views.register') }}">
+                                    <small class="light-text">Click here to register a new account</small>
+                                </a>
+                            </form>
+                            {% endif %}
+                        </div>
+                    </li>
                 </ul>
             </div>
         </div>
     </nav>
 
-    <div class="container">
-      {% block body %}{% endblock %}
-  </div>
-
+    <!-- Alerts -->
+    <div class="container mt-4">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="close" data-dismiss="alert">
+                            <span>&times;</span>
+                        </button>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        
+        {% block body %}{% endblock %}
+    </div>
 </body>
 </html>

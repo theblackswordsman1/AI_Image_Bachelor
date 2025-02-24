@@ -1,0 +1,80 @@
+body {
+    background-color: #121212;
+    color: #ffffff;
+}
+
+.navbar {
+    background-color: #332940 !important;
+}
+
+.container {
+    background-color: #1e1e1e;
+    border-radius: 8px;
+    padding: 16px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    max-width: 90% !important;
+}
+
+.form-control {
+    background-color: #2d2d2d;
+    border: 1px solid #404040;
+    color: #ffffff;
+}
+
+.form-control:focus {
+    background-color: #363636;
+    border-color: rgb(106, 89, 170);
+    color: #ffffff;
+    box-shadow: 0 0 0 0.2rem rgb(98, 80, 156);
+}
+
+.btn-success {
+    background-color: rgb(51, 42, 80);
+    border-color: rgb(76, 63, 120);
+}
+
+.btn-success:hover {
+    background-color: rgb(92, 75, 148);
+    border-color: rgb(133, 109, 210);
+}
+
+.nav-link {
+    color: #ffffff !important;
+}
+
+.nav-link:hover {
+    color: rgb(133, 109, 210) !important;
+}
+
+.navbar-brand {
+    color: rgb(174, 153, 245) !important;
+}
+
+.dropdown-menu {
+    background-color: #333333 !important;
+    border: none;
+}
+
+.dropdown-menu .dropdown-item {
+    color: white !important;
+}
+
+.dropdown-menu .dropdown-item:hover {
+    background-color: #495057 !important;
+}
+
+.login-link {
+    font-weight: bold;
+}
+
+.light-text {
+    color: #eeeded;
+}
+
+.medium-text {
+    color: #9f9f9f;
+}
+
+.medium-text:hover {
+    color: rgb(174, 153, 245);
+}

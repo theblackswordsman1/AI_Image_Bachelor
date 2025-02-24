@@ -17,10 +17,6 @@ def create_app():
     # Import models
     from models import User
 
-    @login_manager.user_loader
-    def load_user(user_id):
-        return User.query.get(int(user_id))
-
     # Blueprints
     from views import views
     app.register_blueprint(views)
