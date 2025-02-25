@@ -61,5 +61,19 @@ def logout():
 # Binary classification
 @views.route("/binary-classification")
 def binary_classification():
-
     return render_template("binary_classification.html")
+
+# Temp classification
+@views.route("/temp-classification")
+def temp_classification():
+    return render_template("temp_classification.html")
+
+# Other classification
+@views.route("/other-classification")
+def other_classification():
+    return render_template("other_classification.html")
+
+# My projects
+@views.route("/my-projects")
+def my_projects():
+    return render_template("my_projects.html")

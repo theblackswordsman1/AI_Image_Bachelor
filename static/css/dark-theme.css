@@ -1,6 +1,17 @@
 body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    padding: 0;
     background-color: #121212;
     color: #ffffff;
+}
+
+main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
 }
 
 .navbar {
@@ -13,6 +24,15 @@ body {
     padding: 16px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.2);
     max-width: 90% !important;
+    margin-bottom: 1rem;
+}
+
+footer {
+    width: 100%;
+    margin-top: auto;
+    padding: 0.1rem 0;
+    color: #766d82;
+    background-color: #2d2d2d;
 }
 
 .form-control {
@@ -38,16 +58,37 @@ body {
     border-color: rgb(133, 109, 210);
 }
 
+.btn-primary {
+    background-color: rgb(49, 52, 88);
+    border-color: rgb(76, 63, 120);
+}
+
+.btn-primary:hover {
+    background-color: rgb(92, 75, 148);
+    border-color: rgb(133, 109, 210);
+}
+
+.btn-secondary {
+    background-color: rgb(58, 59, 73);
+    border-color: rgb(91, 86, 109);
+}
+
+.btn-secondary:hover {
+    background-color: rgb(92, 75, 148);
+    border-color: rgb(133, 109, 210);
+}
+
 .nav-link {
     color: #ffffff !important;
 }
 
 .nav-link:hover {
-    color: rgb(133, 109, 210) !important;
+    color: #695484 !important;
 }
 
 .navbar-brand {
-    color: rgb(174, 153, 245) !important;
+    color: rgb(102, 108, 182) !important;
+    font-family:monospace;
 }
 
 .dropdown-menu {
@@ -77,4 +118,41 @@ body {
 
 .medium-text:hover {
     color: rgb(174, 153, 245);
+}
+
+.classifier-header {
+    color: #ecedef;
+    font-size: x-large;
+    border-radius: 8px;
+    padding: 8px;
+    margin-bottom: 10px;
+}
+
+.classifier-arrow {
+    color: #58578b;
+    font-size: medium;
+    padding-bottom: 160px;
+}
+
+.classifier-arrow:hover {
+    color: rgb(119, 98, 187)
+}
+
+.alert-success, .alert-info {
+    background-color: #333d52;
+    color: #f5f5fa;
+    font-weight: 520;
+    border-style: hidden;
+}
+
+.alert .close {
+    color: currentColor;
+    opacity: 0.8;
+    border-style: hidden;
+}
+
+.alert .close:hover {
+    background-color: #252d3c;
+    opacity: 1;
+    border-style: hidden;
 }
