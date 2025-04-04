@@ -1,0 +1,97 @@
+<div class="container" id="upload-container">
+  <h1>Upload Images</h1>
+  <p class="text-muted mb-4">
+    Upload folders containing the images for each of the classes you want in
+    your model! <br />
+    You can name the classes after what the folders contains, or let them take
+    the name of the folder.
+  </p>
+
+  <form method="POST" enctype="multipart/form-data" class="upload-form mb-4">
+    <div class="upload-area">
+      <input
+        type="file"
+        name="folder[]"
+        webkitdirectory
+        directory
+        multiple
+        class="file-input"
+        required
+      />
+      <p class="upload-instructions">
+        Each folder should contain images of one class. You need two add atleast
+        two classes.
+      </p>
+      <p class="text-muted">
+        Click <strong class="text-colored">Add Class Folder</strong> after
+        confirming the name before adding more!
+      </p>
+    </div>
+
+    <div class="selected-folder-info" style="display: none">
+      <h4>To upload:</h4>
+      <p id="folder-name"></p>
+      <p id="image-count"></p>
+
+      <div class="form-group mt-3">
+        <label for="class-name">Class Name:</label>
+        <input
+          type="text"
+          id="class-name"
+          name="class_name"
+          class="form-control"
+          required
+        />
+        <small class="form-text text-muted"
+          >Edit this to change the class name</small
+        >
+      </div>
+      <button type="submit" class="btn btn-primary" id="upload_folder">
+        Add Class Folder
+      </button>
+    </div>
+  </form>
+
+  <div class="uploaded-classes">
+    <h3>Uploaded Classes:</h3>
+    <div id="uploaded-class-list">
+      {% if session.get('uploaded_classes', [])|length > 0 %}
+      <div class="row">
+        {% for class_info in session.get('uploaded_classes', []) %}
+        <div class="col-md-6 mb-3">
+          <div class="class-card">
+            <div class="class-header">
+              <i class="fas fa-folder-open"></i>
+              <h5>{{ class_info.name }}</h5>
+            </div>
+            <div class="class-stats">
+              <span class="badge badge-info"
+                >{{ class_info.count }} images</span
+              >
+            </div>
+            <button
+              class="btn btn-sm btn-danger remove-class"
+              data-class-name="{{ class_info.name }}"
+            >
+              <i class="fas fa-trash"></i> Remove Class
+            </button>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+      {% if session.get('uploaded_classes', [])|length >= 2 %}
+      <button
+        id="continue-btn"
+        class="btn btn-success mt-3"
+        onclick="window.location.href='/preprocess'"
+      >
+        Continue to Preprocessing
+      </button>
+      {% endif %} {% else %}
+      <p class="text-muted" id="no-classes-message">
+        No classes uploaded. Upload at least 2 classes.
+      </p>
+      {% endif %}
+    </div>
+  </div>
+</div>
