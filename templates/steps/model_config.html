@@ -1,0 +1,200 @@
+<div class="container" id="model-config-container">
+  <h1>Model Configuration</h1>
+  <p class="text-muted mb-4">
+    Decide the configuration for your CNN image classification model.
+  </p>
+
+  <form method="POST" class="model-config-form mb-4">
+    <!-- Convolutional Layers -->
+    <div class="form-group collapsible-section" id="conv-layers-section">
+      <div
+        class="section-header"
+        onclick="toggleSection('conv-layers-section')"
+      >
+        <h3>Convolutional Layers</h3>
+        <div class="checkmark"></div>
+      </div>
+      <div class="collapsible-content">
+        <p class="text-muted mt-2">
+          Perform feature extraction by sliding a small filter/kernel across the
+          images (will add more info to all...)...
+        </p>
+        <div id="conv-layers-container">
+          <div class="conv-layer mb-4">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>Filters:</label>
+                  <input
+                    type="number"
+                    name="filters[]"
+                    min="16"
+                    max="512"
+                    value="32"
+                    required
+                  />
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>Kernel size:</label>
+                  <select name="kernel_size[]">
+                    <option value="3">3x3 (standard)</option>
+                    <option value="5">5x5</option>
+                    <option value="7">7x7</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="row mt-2">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>Padding:</label>
+                  <select name="padding">
+                    <option value="same">Same (preserve size)</option>
+                    <option value="valid">Valid (reduce size)</option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>Activation:</label>
+                  <select name="activation">
+                    <option value="relu">ReLU</option>
+                    <option value="leaky_relu">Leaky ReLU</option>
+                    <option value="elu">ELU</option>
+                    <option value="tanh">Tanh</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <button
+          type="button"
+          class="btn btn-secondary"
+          onclick="addConvLayer()"
+        >
+          Add another convolutional layer
+        </button>
+      </div>
+    </div>
+
+    <!-- Pooling Configuration -->
+    <div class="form-group collapsible-section" id="pooling-section">
+      <div class="section-header" onclick="toggleSection('pooling-section')">
+        <h3>Pooling Configuration</h3>
+        <div class="checkmark"></div>
+      </div>
+      <div class="collapsible-content">
+        <p class="text-muted mt-2">Reduces the size of the data...</p>
+        <div class="row">
+          <div class="col-md-6">
+            <label>Pooling Type:</label>
+            <select name="pool_type">
+              <option value="max">Max Pooling</option>
+              <option value="avg">Average Pooling</option>
+            </select>
+          </div>
+          <div class="col-md-6">
+            <label>Pool Size:</label>
+            <select name="pool_size">
+              <option value="2">2x2 (standard)</option>
+              <option value="3">3x3</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Batch Normalization -->
+    <div class="form-group collapsible-section" id="normalization-section">
+      <div
+        class="section-header"
+        onclick="toggleSection('normalization-section')"
+      >
+        <h3>Batch Normalization</h3>
+        <div class="checkmark"></div>
+      </div>
+      <div class="collapsible-content">
+        <p class="text-muted mt-2">
+          Normalizes layer activations to improve training stability and
+          speed...
+        </p>
+        <div class="form-check">
+          <input
+            class="form-check-input"
+            type="checkbox"
+            name="batch_norm"
+            id="batch_norm"
+            checked
+          />
+          <label class="form-check-label" for="batch_norm">
+            Use Batch Normalization
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Regularization -->
+    <div class="form-group collapsible-section" id="regularization-section">
+      <div
+        class="section-header"
+        onclick="toggleSection('regularization-section')"
+      >
+        <h3>Regularization</h3>
+        <div class="checkmark"></div>
+      </div>
+      <div class="collapsible-content">
+        <p class="text-muted mt-2">
+          Helps prevent overfitting by randomly disabling neurons during
+          training....
+        </p>
+        <label>Dropout Rate:</label>
+        <select name="dropout_rate" class="form-control">
+          <option value="0.2">0.2 (light)</option>
+          <option value="0.5" selected>0.5 (standard)</option>
+          <option value="0.7">0.7 (heavy)</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Dense layers -->
+    <div class="form-group collapsible-section" id="dense-layer-section">
+      <div
+        class="section-header"
+        onclick="toggleSection('dense-layer-section')"
+      >
+        <h3>Dense layers</h3>
+        <div class="checkmark"></div>
+      </div>
+      <div class="collapsible-content">
+        <p class="text-muted mt-2">Connects the layers...</p>
+        <div id="dense-layer-container">
+          <div class="dense-layer mb-3">
+            <label>Units:</label>
+            <input
+              type="number"
+              name="dense_units[]"
+              min="32"
+              max="1024"
+              value="128"
+              required
+            />
+          </div>
+        </div>
+        <button
+          type="button"
+          class="btn btn-secondary"
+          onclick="addDenseLayer()"
+        >
+          Add dense layer
+        </button>
+      </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary mt-4">
+      Configure Model and continue to training configuration
+    </button>
+  </form>
+</div>

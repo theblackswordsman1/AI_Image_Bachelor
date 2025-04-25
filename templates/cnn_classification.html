@@ -1,0 +1,91 @@
+{% extends "layout.html" %} {% block page_title %}CNN Image Classification{%
+endblock %} {% block body %}
+
+<div class="container-fluid">
+  <div class="row">
+    <!-- Sidebar steps/progress list -->
+    <div class="col-md-3 sidebar">
+      <div class="step-sidebar">
+        <h4 class="sidebar-header">Progress:</h4>
+
+        <div class="step-list">
+          <div class="step {% if current_step >= 1 %}active{% endif %}">
+            <a href="{{ url_for('views.upload') }}" class="step-link">
+              <div class="step-content">
+                <span class="step-number">1</span>
+                <span class="step-text">Define Classes</span>
+              </div>
+              {% if 1 in done_steps %}
+              <i class="fas fa-check step-check"></i>
+              {% endif %}
+            </a>
+          </div>
+
+          <div class="step {% if current_step >= 2 %}active{% endif %}">
+            <a href="{{ url_for('views.preprocess') }}" class="step-link">
+              <div class="step-content">
+                <span class="step-number">2</span>
+                <span class="step-text">Preprocess</span>
+              </div>
+              {% if current_step > 2 or 2 in done_steps %}
+              <i class="fas fa-check step-check"></i>
+              {% endif %}
+            </a>
+          </div>
+
+          <div class="step {% if current_step >= 3 %}active{% endif %}">
+            <a href="{{ url_for('views.model_config') }}" class="step-link">
+              <div class="step-content">
+                <span class="step-number">3</span>
+                <span class="step-text">Model</span>
+              </div>
+              {% if current_step > 3 or 3 in done_steps %}
+              <i class="fas fa-check step-check"></i>
+              {% endif %}
+            </a>
+          </div>
+
+          <div class="step {% if current_step >= 4 %}active{% endif %}">
+            <a href="{{ url_for('views.training_config') }}" class="step-link">
+              <div class="step-content">
+                <span class="step-number">4</span>
+                <span class="step-text">Training</span>
+              </div>
+              {% if current_step > 4 or 4 in done_steps %}
+              <i class="fas fa-check step-check"></i>
+              {% endif %}
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main -->
+    <div class="col-md-9">
+      <div class="main-content">
+        <div class="navigation-section">
+          <a href="{{ url_for('views.home') }}" class="classifier-arrow">
+            <i class="fas fa-arrow-left"></i> Choose Another Classifier
+          </a>
+        </div>
+
+        <!-- Steps -->
+        {% if current_step == 1 %} {% include "steps/upload.html" %} {% elif
+        current_step == 2 %} {% include "steps/preprocess.html" %} {% elif
+        current_step == 3 %} {% include "steps/model_config.html" %} {% elif
+        current_step == 4 %} {% include "steps/training_config.html" %} {% else
+        %}
+        <div class="text-center">
+          <a
+            href="{{ url_for('views.upload') }}"
+            class="btn btn-primary btn-lg"
+          >
+            Start New Classification Project
+          </a>
+        </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
