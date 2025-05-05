@@ -6,6 +6,10 @@
     <title>{% block page_title %}{% endblock %} - UiAI</title>
 
     <link
+      href="{{ url_for('static', filename='css/colors.css') }}"
+      rel="stylesheet"
+    />
+    <link
       rel="stylesheet"
       href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
     />
@@ -21,6 +25,14 @@
       rel="stylesheet"
       href="{{ url_for('static', filename='css/layout.css') }}"
     />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/components.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/form-elements.css') }}"
+    />
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
@@ -29,9 +41,9 @@
   </head>
   <body>
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-      <div class="container">
-        <a class="navbar-brand" href="/">UiAI</a>
+    <nav class="navbar navbar-expand-lg">
+      <div class="top-container">
+        <a class="navbar-brand" href="/">Ui<span style="color: rgb(191, 197, 206);">AI</span></a>
         <button
           class="navbar-toggler"
           type="button"
@@ -41,10 +53,13 @@
           <span class="navbar-toggler-icon"></span>
         </button>
 
-        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <div
+          class="collapse navbar-collapse justify-content-end"
+          id="navbarNavDropdown"
+        >
           <ul class="navbar-nav ml-auto">
             <!-- Classifications dropdown -->
-            <li class="nav-item dropdown mr-3">
+            <!-- <li class="nav-item dropdown mr-3">
               <a
                 class="nav-link dropdown-toggle"
                 href="#"
@@ -76,7 +91,7 @@
                   >Other Classification</a
                 >
               </div>
-            </li>
+            </li> -->
 
             <!-- Info dropdown -->
             <li class="nav-item dropdown mr-4">
@@ -89,17 +104,22 @@
                 aria-haspopup="true"
                 aria-expanded="false"
               >
-                Info
+                <i class="fas fa-bars"></i>
               </a>
               <div
-                class="dropdown-menu dropdown-menu-right"
-                aria-labelledby="classificationDropdown"
+                class="dropdown-menu dropdown-menu-right bg-light"
+                aria-labelledby="infoDropdown"
               >
-                <a class="dropdown-item" href="#">To come...</a>
-                <a class="dropdown-item" href="#">To come...</a>
+                <a class="dropdown-item" href="{{ url_for('views.other_classification') }}">
+                  <i class="fas fa-question-circle mr-2"></i>
+                  About
+                </a>
+                <a class="dropdown-item" href="{{ url_for('views.other_classification') }}">
+                  <i class="fas fa-book mr-2"></i>
+                  Documentation
+                </a>
               </div>
             </li>
-          </ul>
 
           <!-- Login / user dropdown -->
           <ul class="navbar-nav">
@@ -113,7 +133,7 @@
               >
                 {% if session.get("current_user") %}
                 <b>{{ session.get("current_user") }}</b>
-                {% else %} Log In {% endif %}
+                {% else %} Login {% endif %}
               </a>
               <div class="dropdown-menu dropdown-menu-right p-3">
                 {% if session.get("current_user") %}
@@ -149,12 +169,17 @@
                   </a>
                 </form>
                 {% else %}
-                <a class="dropdown-item" href="{{ url_for('views.login') }}"
-                  >Login</a
-                >
-                <a class="dropdown-item" href="{{ url_for('views.register') }}"
-                  >Register</a
-                >
+                
+                <a class="dropdown-item" href="{{ url_for('views.login') }}">
+                  <i class="fas fa-sign-in-alt mr-2"></i>
+                  Login
+                </a>
+
+
+                <a class="dropdown-item" href="{{ url_for('views.register') }}">
+                  <i class="fas fa-user-alt mr-2"></i>
+                  Register
+                </a>
                 {% endif %} {% endif %}
               </div>
             </li>
@@ -165,20 +190,18 @@
 
     <main>
       <!-- Alerts -->
-      <div class="container mt-4">
-        {% with messages = get_flashed_messages(with_categories=true) %} {% if
-        messages %} {% for category, message in messages %}
-        <div
-          class="alert alert-{{ category }} alert-dismissible fade show"
-          role="alert"
-        >
-          {{ message }}
-          <button type="button" class="close" data-dismiss="alert">
-            <span>&times;</span>
-          </button>
-        </div>
-        {% endfor %} {% endif %} {% endwith %} {% block body %}{% endblock %}
+      {% with messages = get_flashed_messages(with_categories=true) %} {% if
+      messages %} {% for category, message in messages %}
+      <div
+        class="alert alert-{{ category }} alert-dismissible fade show"
+        role="alert"
+      >
+        {{ message }}
+        <button type="button" class="close" data-dismiss="alert">
+          <span>&times;</span>
+        </button>
       </div>
+      {% endfor %} {% endif %} {% endwith %} {% block body %}{% endblock %}
     </main>
 
     <!-- Footer -->

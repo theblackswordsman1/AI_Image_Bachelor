@@ -1,24 +1,45 @@
 <div class="container" id="preprocess-container">
-  <h1>Image Preprocessing</h1>
+  <h1>Image Preprocessing Settings</h1>
   <p class="text-muted mb-4">
-    Click the different headers to add the different preprocessing steps.
+    Click the headers to add the different preprocessing steps.
   </p>
 
   <form method="POST" class="preprocessing-form mb-4">
     <!-- Resizing -->
     <div class="form-group collapsible-section" id="image-resizing-section">
+      <!-- Header and info toggle -->
       <div
         class="section-header"
         onclick="toggleSection('image-resizing-section')"
       >
         <h3>Image Resizing</h3>
-        <div class="checkmark"></div>
+        <div class="info-toggle-container">
+          <a
+            href="#"
+            class="info-toggle"
+            data-target="size-info"
+            onclick="toggleDefinition('resizing-info'); event.stopPropagation();"
+          >
+            <i class="fas fa-question-circle"></i>
+          </a>
+        </div>
       </div>
+
+      <div
+        id="resizing-info"
+        class="definition definition-info"
+        style="display: none"
+      >
+        <p>Info coming here...</p>
+      </div>
+
       <div class="collapsible-content">
         <label for="image-size">Set image size:</label>
         <select id="image-size" name="image_size" class="form-control">
-          <option value="224">224x224 (standard)</option>
+          <option value="28">28x28 (standard for MNIST)</option>
+          <option value="32">32x32</option>
           <option value="160">160x160</option>
+          <option value="224" selected>224x224 (standard)</option>
           <option value="299">299x299</option>
           <option value="custom">Custom</option>
         </select>
@@ -48,13 +69,32 @@
 
     <!-- Augmentation -->
     <div class="form-group collapsible-section" id="image-augmentation-section">
+      <!-- Header and info toggle -->
       <div
         class="section-header"
         onclick="toggleSection('image-augmentation-section')"
       >
         <h3>Image Augmentation</h3>
-        <div class="checkmark"></div>
+        <div class="info-toggle-container">
+          <a
+            href="#"
+            class="info-toggle"
+            data-target="size-info"
+            onclick="toggleDefinition('augmentation-info'); event.stopPropagation();"
+          >
+            <i class="fas fa-question-circle"></i>
+          </a>
+        </div>
       </div>
+
+      <div
+        id="augmentation-info"
+        class="definition definition-info"
+        style="display: none"
+      >
+        <p>Info coming here...</p>
+      </div>
+
       <div class="collapsible-content">
         <label>Augmentation Options:</label><br />
         <div class="form-check">
@@ -144,8 +184,8 @@
       </div>
     </div>
 
-    <button type="submit" class="btn btn-primary">
-      Preprocess Images and continue to model configuration.
+    <button type="submit" class="btn btn-success">
+      Preprocess images and continue to model configuration
     </button>
   </form>
 </div>

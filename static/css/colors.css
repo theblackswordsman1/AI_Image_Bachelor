@@ -1,0 +1,35 @@
+:root {
+  /* UiA Brand Colors */
+  --uia-main: #c8102e;
+  --uia-bg: #ffffff;
+  --uia-accent1: #f8eddd;
+  --uia-accent2: #e1eef9;
+  --uia-accent3: #e6f0e5;
+  --uia-accent4: #fee7e8;
+  --uia-bottom-bar: #192343;
+  --uia-text: #333333;
+  --uia-text2: #03591e;
+  --uia-text3: #192343;
+
+  /* UI Colors */
+  --uia-hover: rgba(200, 16, 46, 0.1);
+  --uia-shadow: rgba(25, 35, 67, 0.1);
+  --white: #ffffff;
+  --gray-100: #f8f9fa;
+  --gray-200: #e9ecef;
+  --gray-300: #dee2e6;
+  --gray-400: #ced4da;
+  --gray-500: #adb5bd;
+  --gray-600: #6c757d;
+  --gray-700: #495057;
+  --gray-800: #343a40;
+  --gray-900: #212529;
+  --black: #000000;
+
+  /* Component Colors */
+  --border-color: var(--gray-300);
+  --error-background: #fee7e8;
+  --error-text: #c8102e;
+  --success-background: var(--uia-accent3);
+  --success-text: var(--uia-text2);
+}

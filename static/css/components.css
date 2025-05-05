@@ -1,0 +1,389 @@
+/* Step components */
+.step-sidebar {
+  padding: 0 15px;
+}
+
+.sidebar-header {
+  color: var(--uia-text);
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid var(--border-color);
+}
+
+.step-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.step {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px;
+  border-radius: 8px;
+  background: var(--white);
+  transition: all 0.3s ease;
+  color: var(--uia-text);
+  margin-bottom: 10px;
+  border: 1px solid var(--border-color);
+}
+
+.step-content {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.step.active {
+  background: var(--uia-main);
+  color: var(--white);
+  box-shadow: 0 2px 8px var(--uia-shadow);
+  border: none;
+}
+
+.step-number {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--white);
+  color: var(--uia-main);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 1em;
+  border: 2px solid var(--uia-main);
+}
+
+.step.active .step-number {
+  background: var(--white);
+  color: var(--uia-main);
+}
+
+.step:not(.active) {
+  opacity: 0.8;
+}
+
+.step:not(.active):hover {
+  opacity: 1;
+  cursor: pointer;
+  background: var(--uia-accent1);
+}
+
+.step-link {
+  display: flex;
+  width: 100%;
+  text-decoration: none;
+  color: inherit;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 15px;
+}
+
+.step-link:hover {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Dataset cards */
+.dataset-card-wrapper {
+  display: block;
+  width: 100%;
+  cursor: pointer;
+  margin-bottom: 0;
+}
+
+.dataset-card.selectable {
+  transition: all 0.3s ease;
+  background-color: var(--white);
+  color: var(--uia-text);
+  border: 2px solid var(--border-color);
+  height: 100%;
+}
+
+.dataset-card.selectable:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px var(--uia-shadow);
+  border-color: var(--uia-main);
+}
+
+.dataset-card.selected {
+  border-color: var(--uia-main);
+  background-color: var(--uia-accent4);
+}
+
+.dataset-card .list-group-item {
+  background-color: var(--white);
+  border-color: var(--border-color);
+  color: var(--uia-text);
+}
+
+.class-card {
+  background: var(--uia-accent2);
+  border-radius: 8px;
+  padding: 15px;
+  margin-bottom: 10px;
+}
+
+/* Cards */
+.card {
+  background-color: var(--uia-accent1);
+  border-radius: 25px;
+  border: none;
+  /* box-shadow: 0 4px 6px var(--uia-shadow); */
+  box-shadow: none !important;
+  margin-bottom: 2rem;
+}
+
+.card-body {
+  background-color: var(--white);
+  border-radius: 20px;
+  padding: 40px;
+  margin: 20px;
+  box-shadow: 0 2px 4px var(--uia-shadow);
+}
+
+.card-title {
+  color: var(--uia-text);
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+  font-weight: 600;
+}
+
+#trainingOutput {
+  background-color: var(--gray-100);
+  border-radius: 15px;
+  padding: 20px;
+  min-height: 200px;
+  max-height: 500px;
+  overflow-y: auto;
+}
+
+#codeBlock {
+  display: none;
+}
+
+.button-card {
+  box-shadow: none !important;
+  background-color: var(--uia-accent1);
+}
+
+#trainingOutput {
+  background-color: var(--gray-100);
+  border-radius: 15px;
+  padding: 20px;
+  min-height: 200px;
+  max-height: 500px;
+  overflow-y: auto;
+}
+
+#codeBlock {
+  display: none;
+}
+
+/* Clickable term */
+.clickable-term {
+  color: var(--uia-main);
+  text-decoration: none;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.clickable-term:hover {
+  opacity: 0.8;
+}
+
+/* Info toggle */
+.info-content {
+  transition: all 0.3s ease;
+}
+
+.info-toggle {
+  transition: transform 0.3s ease;
+  padding-bottom: 4px;
+  padding-right: 6px;
+  color: var(--uia-text3);
+  font-size: 1.2rem;
+}
+
+.info-toggle-container .definition {
+  display: none;
+  margin-top: 10px;
+  padding: 10px;
+  background-color: var(--uia-accent2);
+  border-left: 4px solid var(--uia-main);
+  border-radius: 4px;
+}
+
+.section-header.show .info-toggle-container .definition {
+  display: block;
+}
+
+.definition {
+  display: none;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  padding: 10px;
+  background-color: var(--uia-accent2);
+  border-radius: 5px;
+}
+
+.definition.show {
+  display: block;
+}
+
+.definition-info {
+  background-color: var(--uia-accent3) !important;
+  border: 2px solid var(--uia-text2) !important;
+  padding: 15px !important;
+  margin-left: 2% !important;
+  margin-right: 2% !important;
+}
+
+/* Headers */
+.class-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.class-header i {
+  margin-right: 10px;
+  color: var(--uia-main);
+}
+
+.class-header h5 {
+  margin: 0;
+  color: var(--uia-text);
+}
+
+.class-stats {
+  margin-bottom: 10px;
+}
+
+.section-title {
+  color: var(--uia-text);
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+  font-weight: 600;
+}
+
+.subsection-title {
+  color: var(--uia-text);
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  font-weight: 500;
+}
+
+/* Classifiers / Headers */
+.classifier-header {
+  margin-bottom: 20px;
+  color: var(--uia-text);
+  text-align: left;
+  padding-left: 15px;
+}
+
+.classifier-arrow {
+  display: inline-block;
+  margin-bottom: 15px;
+  color: var(--gray-600);
+  text-decoration: none;
+  transition: color 0.3s ease;
+  margin-left: 15px;
+}
+
+.classifier-arrow:hover {
+  color: var(--uia-main);
+  text-decoration: none;
+}
+
+/* Collapsible sections */
+.collapsible-section {
+  border: 2px solid var(--border-color);
+  margin-bottom: 15px;
+  border-radius: 8px;
+  overflow: hidden;
+  position: relative;
+  background-color: var(--white);
+  transition: background-color 0.3s;
+}
+
+.collapsible-content {
+  display: none !important;
+  padding: 15px;
+  background-color: var(--white);
+}
+
+.collapsible-content.visible {
+  display: block !important;
+}
+
+.section-header {
+  background-color: var(--uia-bg);
+  padding: 15px;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--border-color);
+  position: relative;
+}
+
+/* Term Definition */
+.definition {
+  display: none;
+  margin-top: 10px;
+  margin-bottom: 20px;
+  padding: 15px;
+  background-color: var(--uia-accent2);
+  border-left: 4px solid var(--uia-main);
+  font-size: 0.9em;
+}
+
+/* .definition.active {
+  display: block;
+} */
+
+.definition.show {
+  display: block;
+}
+
+/* Temp */
+.classification-buttons {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.classification-buttons .btn {
+  text-align: center;
+  width: 70%;
+  padding: 15px 30px;
+  font-size: 1.6rem;
+  font-weight: 500;
+}
+
+.section-title {
+  color: var(--uia-text);
+  font-size: 2.4rem;
+  margin-bottom: 3.2rem;
+  font-weight: 600;
+  text-align: center;
+  width: 100%;
+  white-space: nowrap;
+  padding: 0 1rem;
+}
+
+.step-text {
+  margin-right: 5px;
+}
+
+.step-check {
+  color: var(--border-color);
+}
+
+.login-link {
+  margin-right: -90px;
+}

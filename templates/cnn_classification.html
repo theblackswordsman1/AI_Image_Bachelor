@@ -25,7 +25,7 @@ endblock %} {% block body %}
             <a href="{{ url_for('views.preprocess') }}" class="step-link">
               <div class="step-content">
                 <span class="step-number">2</span>
-                <span class="step-text">Preprocess</span>
+                <span class="step-text">Preprocessing</span>
               </div>
               {% if current_step > 2 or 2 in done_steps %}
               <i class="fas fa-check step-check"></i>
@@ -37,7 +37,7 @@ endblock %} {% block body %}
             <a href="{{ url_for('views.model_config') }}" class="step-link">
               <div class="step-content">
                 <span class="step-number">3</span>
-                <span class="step-text">Model</span>
+                <span class="step-text">Model Config </span>
               </div>
               {% if current_step > 3 or 3 in done_steps %}
               <i class="fas fa-check step-check"></i>
@@ -49,9 +49,20 @@ endblock %} {% block body %}
             <a href="{{ url_for('views.training_config') }}" class="step-link">
               <div class="step-content">
                 <span class="step-number">4</span>
-                <span class="step-text">Training</span>
+                <span class="step-text">Training Config</span>
               </div>
               {% if current_step > 4 or 4 in done_steps %}
+              <i class="fas fa-check step-check"></i>
+              {% endif %}
+            </a>
+          </div>
+          <div class="step {% if current_step >= 5 %}active{% endif %}">
+            <a href="{{ url_for('views.evaluation') }}" class="step-link">
+              <div class="step-content">
+                <span class="step-number">5</span>
+                <span class="step-text">Train Model</span>
+              </div>
+              {% if current_step > 5 or 5 in done_steps %}
               <i class="fas fa-check step-check"></i>
               {% endif %}
             </a>
@@ -73,8 +84,8 @@ endblock %} {% block body %}
         {% if current_step == 1 %} {% include "steps/upload.html" %} {% elif
         current_step == 2 %} {% include "steps/preprocess.html" %} {% elif
         current_step == 3 %} {% include "steps/model_config.html" %} {% elif
-        current_step == 4 %} {% include "steps/training_config.html" %} {% else
-        %}
+        current_step == 4 %} {% include "steps/training_config.html" %} {% elif
+        current_step == 5 %} {% include "steps/evaluation.html" %} {% else %}
         <div class="text-center">
           <a
             href="{{ url_for('views.upload') }}"

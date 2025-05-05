@@ -1,6 +1,9 @@
 <div class="container">
-  <h1>Training configuration</h1>
-  <p class="text-muted mb-4">Fine-tune your model training parameters...</p>
+  <h1>Training Configuration</h1>
+  <p class="text-muted mb-4">
+    Fine-tune your model training parameters... Defines how the model is
+    trained.
+  </p>
 
   <form method="POST" class="training-config-form mb-4">
     <div class="row">
@@ -11,7 +14,7 @@
             <option value="16">16 (slower, more stable)</option>
             <option value="32" selected>32 (standard)</option>
             <option value="64">64 (faster, less stable)</option>
-            <option value="128">128 (fastest, least stable)</option>
+            <option value="128">128 (fastest, less stable)</option>
           </select>
           <small class="form-text text-muted"
             >How many samples are processed before updating the model...</small
@@ -36,19 +39,6 @@
       </div>
 
       <div class="col-md-6">
-        <div class="form-group">
-          <label for="optimizer">Optimizer:</label>
-          <select name="optimizer" id="optimizer" class="form-control">
-            <option value="Adam" selected>Adam (standard)</option>
-            <option value="SGD">SGD</option>
-            <option value="RMSprop">RMSprop</option>
-            <option value="Adamax">Adamax</option>
-          </select>
-          <small class="form-text text-muted"
-            >Adjusts the weights of the model to minimize the loss....</small
-          >
-        </div>
-
         <div class="form-group">
           <label for="learning-rate">Learning Rate:</label>
           <select name="learning_rate" id="learning-rate" class="form-control">
@@ -82,30 +72,16 @@
           >
         </div>
       </div>
-
-      <div class="col-md-6">
-        <div class="form-group">
-          <label for="loss">Loss Function:</label>
-          <select name="loss" id="loss" class="form-control">
-            <option value="binary_crossentropy" selected>
-              Binary Crossentropy (for 2 classes)
-            </option>
-            <option value="categorical_crossentropy">
-              Categorical Crossentropy (for >2 classes)
-            </option>
-            <option value="sparse_categorical_crossentropy">
-              Sparse Categorical Crossentropy
-            </option>
-          </select>
-          <small class="form-text text-muted"
-            >Measure how well the model performs...</small
-          >
-        </div>
-      </div>
     </div>
-
-    <button type="submit" class="btn btn-primary mt-4">
-      Submit Training Configuration and Generate Code
-    </button>
+    <div class="d-flex justify-content-center mt-4">
+      <button
+        type="submit"
+        name="generate"
+        value="true"
+        class="btn btn-success"
+      >
+        Set training configuration and continue to model code and training
+      </button>
+    </div>
   </form>
 </div>

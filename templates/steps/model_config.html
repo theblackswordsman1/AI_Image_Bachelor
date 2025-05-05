@@ -1,7 +1,8 @@
 <div class="container" id="model-config-container">
   <h1>Model Configuration</h1>
   <p class="text-muted mb-4">
-    Decide the configuration for your CNN image classification model.
+    Decide the configuration for your CNN image classification model. Defines
+    how your model behaves.
   </p>
 
   <form method="POST" class="model-config-form mb-4">
@@ -17,7 +18,7 @@
       <div class="collapsible-content">
         <p class="text-muted mt-2">
           Perform feature extraction by sliding a small filter/kernel across the
-          images (will add more info to all...)...
+          images (will add more info to all...)
         </p>
         <div id="conv-layers-container">
           <div class="conv-layer mb-4">
@@ -50,8 +51,8 @@
               <div class="col-md-6">
                 <div class="form-group">
                   <label>Padding:</label>
-                  <select name="padding">
-                    <option value="same">Same (preserve size)</option>
+                  <select name="padding[]">
+                    <option value="same">Same</option>
                     <option value="valid">Valid (reduce size)</option>
                   </select>
                 </div>
@@ -59,11 +60,10 @@
               <div class="col-md-6">
                 <div class="form-group">
                   <label>Activation:</label>
-                  <select name="activation">
+                  <select name="activation[]">
                     <option value="relu">ReLU</option>
                     <option value="leaky_relu">Leaky ReLU</option>
                     <option value="elu">ELU</option>
-                    <option value="tanh">Tanh</option>
                   </select>
                 </div>
               </div>
@@ -107,35 +107,6 @@
       </div>
     </div>
 
-    <!-- Batch Normalization -->
-    <div class="form-group collapsible-section" id="normalization-section">
-      <div
-        class="section-header"
-        onclick="toggleSection('normalization-section')"
-      >
-        <h3>Batch Normalization</h3>
-        <div class="checkmark"></div>
-      </div>
-      <div class="collapsible-content">
-        <p class="text-muted mt-2">
-          Normalizes layer activations to improve training stability and
-          speed...
-        </p>
-        <div class="form-check">
-          <input
-            class="form-check-input"
-            type="checkbox"
-            name="batch_norm"
-            id="batch_norm"
-            checked
-          />
-          <label class="form-check-label" for="batch_norm">
-            Use Batch Normalization
-          </label>
-        </div>
-      </div>
-    </div>
-
     <!-- Regularization -->
     <div class="form-group collapsible-section" id="regularization-section">
       <div
@@ -152,9 +123,9 @@
         </p>
         <label>Dropout Rate:</label>
         <select name="dropout_rate" class="form-control">
-          <option value="0.2">0.2 (light)</option>
+          <option value="0.2">0.2</option>
           <option value="0.5" selected>0.5 (standard)</option>
-          <option value="0.7">0.7 (heavy)</option>
+          <option value="0.7">0.7</option>
         </select>
       </div>
     </div>
@@ -193,8 +164,8 @@
       </div>
     </div>
 
-    <button type="submit" class="btn btn-primary mt-4">
-      Configure Model and continue to training configuration
+    <button type="submit" class="btn btn-success mt-4">
+      Configure model and continue to training configuration
     </button>
   </form>
 </div>
