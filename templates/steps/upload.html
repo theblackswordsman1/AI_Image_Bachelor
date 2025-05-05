@@ -1,0 +1,277 @@
+<div class="container" id="upload-container">
+  <h1>Define Classes</h1>
+  <p class="text-muted mb-4" style="font-size: 1rem">
+    A
+    <span class="clickable-term" data-definition="neural-network"
+      >neural network</span
+    >
+    learns from
+    <span class="clickable-term" data-definition="labeled-data"
+      >labeled data</span
+    >, which you will add in this step. <br />
+    The data must be organized into
+    <span class="clickable-term" data-definition="classes">classes</span>, which
+    will be the categories the model will learn to distinguish between.
+    <br />
+    You can either
+    <span class="clickable-term" data-definition="cutom-imgset">
+      upload your own</span
+    >
+    folders of images to create the classes, or you can select a
+    <span class="clickable-term" data-definition="pre-created"
+      >pre-created dataset</span
+    >, where the classes and labels are already defined. <br />
+    This will allow the model to learn patterns that differentiate each class,
+    in the end making it able to predict the class of new, unseen images.
+  </p>
+
+  <div id="neural-network" class="definition">
+    <h4>Neural Network</h4>
+    <p>
+      A neural network is a computational model inspired by the human brain's
+      structure. It consists of interconnected nodes (neurons) organized in
+      layers that process and transform input data to produce an output. Neural
+      networks are particularly effective at pattern recognition,
+      classification, and prediction tasks.
+    </p>
+  </div>
+  <div id="labeled-data" class="definition">
+    <h4>Labeled Data</h4>
+    <p>
+      Labeled data is data the model will use for training that includes both
+      the input (here this would be an image) and the correct output, which is
+      called the label. For example, an image of a dog with the label “dog.” The
+      model uses this pair of input and label to learn how to predict labels for
+      new, unseen inputs.
+    </p>
+  </div>
+  <div id="classes" class="definition">
+    <h4>Classes</h4>
+    <p>
+      Classes are the categories the model learns to recognize. Each input
+      (which here is an image) is assigned to one class. For example, in a
+      dataset of animals, the classes might be dog, cat, and mouse. During
+      training, the model learns how to tell these classes apart by identifying
+      patterns and features in the input images that are distinctive for each
+      class.
+    </p>
+  </div>
+  <div id="pre-created" class="definition">
+    <h4>Pre-Created Datasets</h4>
+    <p>
+      Pre-created, or pre-loaded datasets are ready-to-use collections of data
+      that already include inputs and their class labels. This means you don’t
+      need to upload images, or define classes yourself, as the datasets are
+      already organized and labeled. You will still configure the model in the
+      next steps, like you would with an original dataset.
+    </p>
+  </div>
+  <div id="cutom-imgset" class="definition">
+    <h4>Using your own images</h4>
+    <p>
+      You can use images from your computer to create the classes for your
+      model. Upload folders of images, where each folder represent a class (for
+      example, one folder for cats, another for dogs etc). You can either name
+      the class yourself or let it automatically use the name of the folder.
+    </p>
+  </div>
+
+  <!-- Toggel dataset type -->
+  <div class="upload-type-toggle mb-4">
+    <h4>Upload Type:</h4>
+    <div class="btn-group" role="group">
+      <button
+        type="button"
+        class="btn btn-primary upload-type-btn active"
+        id="custom-data-btn"
+      >
+        Upload Images
+      </button>
+      <button
+        type="button"
+        class="btn btn-secondary upload-type-btn"
+        id="preCreated-data-btn"
+      >
+        Pre-Created Datasets
+      </button>
+    </div>
+  </div>
+
+  <!-- Upload data -->
+  <form
+    method="POST"
+    enctype="multipart/form-data"
+    class="upload-form mb-4"
+    id="custom-upload-form"
+  >
+    <div class="upload-area">
+      <input
+        type="file"
+        name="folder[]"
+        webkitdirectory
+        directory
+        multiple
+        class="file-input"
+        required
+      />
+      <p class="upload-instructions">
+        Each folder should contain images of one class. You need to add atleast
+        two classes.
+      </p>
+      <p class="text-muted">
+        Click <strong class="text-colored">Add Class Folder</strong> after
+        confirming the name before adding more!<br />
+        You can use the folder name as the class label, or choose your own!
+      </p>
+    </div>
+
+    <div class="selected-folder-info" style="display: none">
+      <h4>To upload:</h4>
+      <p id="folder-name"></p>
+      <p id="image-count"></p>
+
+      <div class="form-group mt-3">
+        <label for="class-name">Class Name:</label>
+        <input
+          type="text"
+          id="class-name"
+          name="class_name"
+          class="form-control"
+          required
+        />
+        <small class="form-text text-muted"
+          >Edit this to change the class name</small
+        >
+      </div>
+      <button type="submit" class="btn btn-primary" id="upload_folder">
+        Add Class Folder
+      </button>
+    </div>
+  </form>
+
+  <!-- Pre-Created datasets -->
+  <form
+    method="POST"
+    action="{{ url_for('views.upload') }}"
+    class="preCreated-dataset-form mb-4"
+    id="preCreated-dataset-form"
+    style="display: none"
+  >
+    <div class="row">
+      <div class="col-md-12 mb-3">
+        <h4>Select a Pre-Created Dataset:</h4>
+        <p class="text-muted">
+          Choose from these pre-defined datasets to train your model
+        </p>
+      </div>
+    </div>
+    <div class="row">
+      <!-- MNIST Dataset Card -->
+      <div class="col-md-6 mb-3">
+        <label class="dataset-card-wrapper" for="mnist">
+          <div class="card dataset-card selectable">
+            <div class="card-body">
+              <h5 class="card-title">MNIST</h5>
+              <h6 class="card-subtitle mb-2 text-muted">Handwritten Digits</h6>
+              <p class="card-text">
+                70.000 grayscale images of handwritten digits (0-9).
+              </p>
+              <ul class="list-group list-group-flush mb-3">
+                <li class="list-group-item">Classes: 10 (digits 0-9)</li>
+                <li class="list-group-item">Size: 28x28 pixels</li>
+              </ul>
+              <div class="form-check d-none">
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="dataset"
+                  id="mnist"
+                  value="mnist"
+                />
+              </div>
+            </div>
+          </div>
+        </label>
+      </div>
+
+      <!-- CIFAR-10 Dataset Card -->
+      <div class="col-md-6 mb-3">
+        <label class="dataset-card-wrapper" for="cifar10">
+          <div class="card dataset-card selectable">
+            <div class="card-body">
+              <h5 class="card-title">CIFAR-10</h5>
+              <h6 class="card-subtitle mb-2 text-muted">Common Objects</h6>
+              <p class="card-text">
+                60.000 color images of 10 different object classes.
+              </p>
+              <ul class="list-group list-group-flush mb-3">
+                <li class="list-group-item">Classes: 10 (airplane, bird...)</li>
+                <li class="list-group-item">Size: 32x32 pixels</li>
+              </ul>
+              <div class="form-check d-none">
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="dataset"
+                  id="cifar10"
+                  value="cifar10"
+                />
+              </div>
+            </div>
+          </div>
+        </label>
+      </div>
+
+    <button type="submit" class="btn btn-secondary mt-3">
+      Use selected dataset
+    </button>
+  </form>
+
+  <div class="uploaded-classes">
+    <h3>Uploaded Classes:</h3>
+    <div id="uploaded-class-list">
+      {% if session.get('uploaded_classes', [])|length > 0 %}
+      <div class="row">
+        {% for class_info in session.get('uploaded_classes', []) %}
+        <div class="col-md-6 mb-3">
+          <div class="class-card">
+            <div class="class-header">
+              <i class="fas fa-folder-open"></i>
+              <h5>{{ class_info.name }}</h5>
+            </div>
+            <div class="class-stats">
+              <span class="badge badge-info"
+                >{{ class_info.count }} images</span
+              >
+            </div>
+            <button
+              class="btn btn-sm btn-danger remove-class"
+              data-class-name="{{ class_info.name }}"
+            >
+              <i class="fas fa-trash"></i> Remove Class
+            </button>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+
+      {% if session.get('uploaded_classes', [])|length >= 2 %}
+      <button
+        id="continue-btn"
+        class="btn btn-secondary mt-3"
+        onclick="completeStep1()"
+      >
+        Continue to Preprocessing
+      </button>
+      {% else %}
+      <p class="text-muted mt-3">
+        No classes uploaded. Upload at least 2 classes to continue.
+      </p>
+      {% endif %} {% else %}
+      <p class="text-muted" id="no-classes-message">
+        No classes uploaded yet. Upload at least 2 classes.
+      </p>
+      {% endif %}
+    </div>
+  </div>
+</div>

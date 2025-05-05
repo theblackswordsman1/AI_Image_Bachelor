@@ -1,20 +1,154 @@
-{% extends "layout.html" %}
-{% block page_title %}Welcome{% endblock %}
-{% block body %}
-    {{ super() }}
+{% extends "layout.html" %} {% block page_title %}Welcome{% endblock %} {% block
+body %}
+<div class="container-fluid">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="front-container">
+        <div class="inner-container">
+          <h2 class="section-title" id="classification-title">
+            What do you want to classify?
+          </h2>
+          <div class="classification-buttons" id="button-container">
+            <!-- Main buttons -->
+            <div id="main-buttons">
+              <a
+                href="#"
+                class="btn btn-lg btn-primary mb-3"
+                onclick="showSubButtons('image'); return false;"
+              >
+                Images
+              </a>
+              <a
+                href="#"
+                class="btn btn-lg btn-primary mb-3"
+                onclick="showSubButtons('temp'); return false;"
+              >
+                Text
+              </a>
+              <a
+                href="#"
+                class="btn btn-lg btn-primary mb-3"
+                onclick="showSubButtons('other'); return false;"
+              >
+                Audio
+              </a>
+            </div>
 
-    <p>This is a minimal web app developed with <a href="http://flask.pocoo.org/">Flask</a> framework.</p>
-    <p>The main purpose is to introduce how to implement the essential elements in web applications with Flask, including</p>
-    <ul>
-        <li>URL Building</li>
-        <li>Authentication with Sessions</li>
-        <li>Template & Template Inheritance</li>
-        <li>Error Handling</li>
-        <li>Integrating with Bootstrap</li>
-        <li>Interaction with Database (SQLite)</li>
-        <li>Invoking static resources</li>
-        <li>Upload files</li>
-    </ul>
+            <!-- Image buttons-->
+            <div id="image-buttons" style="display: none">
+              <a
+                href="{{ url_for('views.cnn_classification') }}"
+                class="btn btn-lg btn-primary mb-3"
+              >
+                Tensorflow
+              </a>
+              <a
+                href="{{ url_for('views.other_classification') }}"
+                class="btn btn-lg btn-primary mb-3"
+              >
+                Pytorch
+              </a>
+              <a
+                href="{{ url_for('views.other_classification') }}"
+                class="btn btn-lg btn-primary mb-3"
+              >
+                To come...
+              </a>
+              <a
+                href="#"
+                class="btn btn-lg btn-success mb-3"
+                onclick="showMainButtons(); return false;"
+              >
+                Back
+              </a>
+            </div>
 
-    <p>For more basic knowledge of Flask, you can refer to <a href="https://www.tutorialspoint.com/flask/">a tutorial on Tutorialspoint</a>.</p>
-{% endblock %}
+            <!-- Temp buttons -->
+            <div id="temp-buttons" style="display: none">
+              <a
+                href="{{ url_for('views.other_classification') }}"
+                class="btn btn-lg btn-primary mb-3"
+              >
+                To come...
+              </a>
+              <a
+                href="{{ url_for('views.other_classification') }}"
+                class="btn btn-lg btn-primary mb-3"
+              >
+                To come...
+              </a>
+              <a
+                href="{{ url_for('views.other_classification') }}"
+                class="btn btn-lg btn-primary mb-3"
+              >
+                To come...
+              </a>
+              <a
+                href="#"
+                class="btn btn-lg btn-success mb-3"
+                onclick="showMainButtons(); return false;"
+              >
+                Back
+              </a>
+            </div>
+
+            <!-- Other buttons -->
+            <div id="other-buttons" style="display: none">
+              <a
+                href="{{ url_for('views.other_classification') }}"
+                class="btn btn-lg btn-primary mb-3"
+              >
+                To come...
+              </a>
+              <a
+                href="{{ url_for('views.other_classification') }}"
+                class="btn btn-lg btn-primary mb-3"
+              >
+                To come...
+              </a>
+              <a
+                href="{{ url_for('views.other_classification') }}"
+                class="btn btn-lg btn-primary mb-3"
+              >
+                To come...
+              </a>
+              <a
+                href="#"
+                class="btn btn-lg btn-success mb-3"
+                onclick="showMainButtons(); return false;"
+              >
+                Back
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function showSubButtons(type) {
+      document.getElementById("main-buttons").style.display = "none";
+      document.getElementById(`${type}-buttons`).style.display = "block";
+
+      const titles = {
+        image: "What framework do you wish to use?",
+        temp: "What framework do you wish to use?",
+        other: "What framework do you wish to use?",
+      };
+      document.getElementById("classification-title").textContent =
+        titles[type];
+    }
+
+    function showMainButtons() {
+      document.querySelectorAll('[id$="-buttons"]').forEach((elem) => {
+        elem.style.display = "none";
+      });
+
+      document.getElementById("main-buttons").style.display = "block";
+      document.getElementById("classification-title").textContent =
+        "What do you wish to classify?";
+    }
+  </script>
+  {% endblock %}
+</div>

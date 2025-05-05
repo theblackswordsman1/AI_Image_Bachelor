@@ -1,0 +1,87 @@
+<div class="container">
+  <h1>Training Configuration</h1>
+  <p class="text-muted mb-4">
+    Fine-tune your model training parameters... Defines how the model is
+    trained.
+  </p>
+
+  <form method="POST" class="training-config-form mb-4">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="batch-size">Batch Size:</label>
+          <select name="batch_size" id="batch-size" class="form-control">
+            <option value="16">16 (slower, more stable)</option>
+            <option value="32" selected>32 (standard)</option>
+            <option value="64">64 (faster, less stable)</option>
+            <option value="128">128 (fastest, less stable)</option>
+          </select>
+          <small class="form-text text-muted"
+            >How many samples are processed before updating the model...</small
+          >
+        </div>
+
+        <div class="form-group">
+          <label for="epochs">Number of Epochs:</label>
+          <input
+            type="number"
+            name="epochs"
+            id="epochs"
+            min="1"
+            max="100"
+            value="10"
+            class="form-control"
+          />
+          <small class="form-text text-muted"
+            >How many times the model goes through the dataset....
+          </small>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="learning-rate">Learning Rate:</label>
+          <select name="learning_rate" id="learning-rate" class="form-control">
+            <option value="0.01">0.01 (fast)</option>
+            <option value="0.001" selected>0.001 (standard)</option>
+            <option value="0.0001">0.0001 (slow)</option>
+          </select>
+          <small class="form-text text-muted"
+            >Controls how much the models weights are updated...</small
+          >
+        </div>
+      </div>
+    </div>
+
+    <div class="row mt-3">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="patience">Early Stopping Patience:</label>
+          <input
+            type="number"
+            name="patience"
+            id="patience"
+            min="1"
+            max="20"
+            value="5"
+            class="form-control"
+          />
+          <small class="form-text text-muted"
+            >Number of epochs with no improvement that training will stop
+            after...</small
+          >
+        </div>
+      </div>
+    </div>
+    <div class="d-flex justify-content-center mt-4">
+      <button
+        type="submit"
+        name="generate"
+        value="true"
+        class="btn btn-success"
+      >
+        Set training configuration and continue to model code and training
+      </button>
+    </div>
+  </form>
+</div>

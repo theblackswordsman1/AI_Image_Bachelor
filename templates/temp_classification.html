@@ -1,0 +1,15 @@
+{% extends "layout.html" %}
+{% block page_title %}Welcome{% endblock %}
+{% block body %}
+
+<a href="{{ url_for('views.home') }}" class="classifier-arrow">
+    <i class="fas fa-arrow-left"></i> Choose Another Classifier
+</a>
+
+<div class="row">
+    <div class="col-md-12">
+        <h1 class="classifier-header">To come...</h1>
+        <p style="padding-left: 20px;">More to come...</p>
+    </div>
+</div>
+{% endblock %}
