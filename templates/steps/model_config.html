@@ -8,13 +8,32 @@
   <form method="POST" class="model-config-form mb-4">
     <!-- Convolutional Layers -->
     <div class="form-group collapsible-section" id="conv-layers-section">
+      <!-- Header and info toggle -->
       <div
         class="section-header"
         onclick="toggleSection('conv-layers-section')"
       >
         <h3>Convolutional Layers</h3>
-        <div class="checkmark"></div>
+        <div class="info-toggle-container">
+          <a
+            href="#"
+            class="info-toggle"
+            data-target="size-info"
+            onclick="toggleDefinition(event, 'conv-info'); event.stopPropagation();"
+          >
+            <i class="fas fa-question-circle"></i>
+          </a>
+        </div>
       </div>
+
+      <div
+        id="conv-info"
+        class="definition definition-info"
+        style="display: none"
+      >
+        <p>Info coming here...</p>
+      </div>
+
       <div class="collapsible-content">
         <p class="text-muted mt-2">
           Perform feature extraction by sliding a small filter/kernel across the
@@ -82,10 +101,29 @@
 
     <!-- Pooling Configuration -->
     <div class="form-group collapsible-section" id="pooling-section">
+      <!-- Header and info toggle-->
       <div class="section-header" onclick="toggleSection('pooling-section')">
         <h3>Pooling Configuration</h3>
-        <div class="checkmark"></div>
+        <div class="info-toggle-container">
+          <a
+            href="#"
+            class="info-toggle"
+            data-target="pooling-info"
+            onclick="toggleDefinition(event, 'pooling-info'); event.stopPropagation();"
+          >
+            <i class="fas fa-question-circle"></i>
+          </a>
+        </div>
       </div>
+
+      <div
+        id="pooling-info"
+        class="definition definition-info"
+        style="display: none"
+      >
+        <p>Info coming here...</p>
+      </div>
+
       <div class="collapsible-content">
         <p class="text-muted mt-2">Reduces the size of the data...</p>
         <div class="row">
@@ -109,13 +147,32 @@
 
     <!-- Regularization -->
     <div class="form-group collapsible-section" id="regularization-section">
+      <!-- Header and info toggle  check size info... -->
       <div
         class="section-header"
         onclick="toggleSection('regularization-section')"
       >
         <h3>Regularization</h3>
-        <div class="checkmark"></div>
+        <div class="info-toggle-container">
+          <a
+            href="#"
+            class="info-toggle"
+            data-target="size-info"
+            onclick="toggleDefinition(event, 'regularization-info'); event.stopPropagation();"
+          >
+            <i class="fas fa-question-circle"></i>
+          </a>
+        </div>
       </div>
+
+      <div
+        id="regularization-info"
+        class="definition definition-info"
+        style="display: none"
+      >
+        <p>Info coming here...</p>
+      </div>
+
       <div class="collapsible-content">
         <p class="text-muted mt-2">
           Helps prevent overfitting by randomly disabling neurons during
@@ -132,13 +189,32 @@
 
     <!-- Dense layers -->
     <div class="form-group collapsible-section" id="dense-layer-section">
+      <!-- Header and info toggle  check size info... -->
       <div
         class="section-header"
         onclick="toggleSection('dense-layer-section')"
       >
-        <h3>Dense layers</h3>
-        <div class="checkmark"></div>
+        <h3>Dense Layers</h3>
+        <div class="info-toggle-container">
+          <a
+            href="#"
+            class="info-toggle"
+            data-target="size-info"
+            onclick="toggleDefinition(event, 'dense-layer-info'); event.stopPropagation();"
+          >
+            <i class="fas fa-question-circle"></i>
+          </a>
+        </div>
       </div>
+
+      <div
+        id="dense-layer-info"
+        class="definition definition-info"
+        style="display: none"
+      >
+        <p>Info coming here...</p>
+      </div>
+
       <div class="collapsible-content">
         <p class="text-muted mt-2">Connects the layers...</p>
         <div id="dense-layer-container">

@@ -1,0 +1,209 @@
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  background-color: var(--uia-bg);
+  color: var(--uia-text);
+}
+
+/* UI elements */
+.top-container {
+  background-color: var(--uia-main) !important;
+  color: var(--white) !important;
+  width: 100%;
+  max-width: 1800px !important;
+  margin-left: 10%;
+  padding: 0;
+  /* display: flex; */
+  align-items: center;
+  border-bottom-left-radius: 100px;
+  border-bottom-left-radius: 100px;
+  max-width: 95% !important;
+}
+
+.navbar {
+  background-color: var(--uia-main) !important;
+  padding: 1rem 2rem;
+  box-shadow: 0 2px 4px var(--uia-shadow);
+  border-bottom-left-radius: 100px;
+  margin-bottom: 2rem;
+  position: relative;
+}
+
+.navbar-collapse {
+  flex-grow: 0;
+  margin-left: auto;
+}
+
+.navbar .top-container {
+  background-color: var(--uia-main) !important;
+  color: var(--white) !important;
+  width: 100%;
+  max-width: 1800px !important;
+  margin: 0 auto;
+  padding: 0 4rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: none;
+}
+
+.navbar-brand {
+  color: var(--white) !important;
+  font-weight: 700;
+  font-size: 2.5rem;
+  padding: 0.5rem 0;
+  display: flex;
+  align-items: center;
+}
+
+footer {
+  width: 100%;
+  margin-top: auto;
+  padding: 0.1rem 0;
+  color: var(--white);
+  align-items: center;
+  background-color: var(--uia-bottom-bar);
+}
+
+.nav-link {
+  color: var(--white) !important;
+  font-weight: 500;
+  padding: 0.5rem 1rem;
+  min-width: 4rem;
+}
+
+.nav-link:hover {
+  color: var(--uia-accent1) !important;
+}
+
+.dropdown-menu {
+  margin-top: 0.5rem;
+  border-radius: 6px;
+  box-shadow: 0 4px 6px var(--uia-shadow);
+  border: none;
+  right: 0;
+  left: auto !important;
+  background-color: var(--white) !important;
+}
+
+.dropdown-menu .dropdown-item {
+  color: var(--uia-text) !important;
+  padding: 8px 20px;
+  font-weight: 500;
+}
+
+.dropdown-menu .dropdown-item:hover {
+  background-color: var(--uia-accent2) !important;
+  color: var(--uia-text) !important;
+}
+
+.dropdown-menu .dropdown-item i {
+  width: 20px;
+  color: var(--gray-600);
+}
+
+.nav-item .fa-bars {
+  font-size: 2.4rem;
+  color: var(--uia-bg);
+  padding: 0 0.5rem;
+  width: 3rem;
+  line-height: 0.8;
+}
+
+.nav-item .dropdown-toggle::after {
+  display: none;
+}
+
+/* Forms */
+.form-control {
+  background-color: var(--white);
+  border: 1px solid var(--border-color);
+  color: var(--uia-text);
+}
+
+.form-control:focus {
+  border-color: var(--uia-main);
+  color: var(--uia-text);
+  box-shadow: 0 0 0 0.2rem var(--uia-hover);
+}
+
+/* Buttons */
+.btn-success {
+  background: var(--uia-main);
+  border: 2px solid var(--uia-main);
+  color: var(--uia-bg);
+  padding: 10px 20px;
+  border-radius: 6px;
+  font-weight: 520;
+  border-radius: 100px;
+}
+
+.btn-success:hover {
+  background: var(--uia-accent1);
+  border: 2px solid var(--uia-main);
+  color: var(--uia-main);
+}
+
+.btn-success:active,
+.btn-success:focus,
+.btn-success:active:focus {
+  background: var(--uia-accent1) !important;
+  border-color: var(--uia-main) !important;
+  box-shadow: none !important;
+  outline: none !important;
+}
+
+.btn-primary {
+  background: var(--uia-accent2);
+  color: var(--uia-text3);
+  border: none;
+  padding: 10px 20px;
+  border-radius: 6px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  border-radius: 100px;
+}
+
+.btn-primary:hover {
+  background: var(--uia-bottom-bar);
+  transform: translateY(-1px);
+}
+
+.btn-secondary {
+  background: var(--uia-bg);
+  border: 2px solid var(--uia-main);
+  color: var(--uia-text);
+  padding: 10px 20px;
+  border-radius: 6px;
+  font-weight: 520;
+  border-radius: 100px;
+}
+
+.btn-secondary:hover {
+  background: var(--uia-accent1);
+}
+
+/* Alerts */
+.alert-success {
+  background-color: var(--success-background);
+  color: var(--success-text);
+  border: none;
+}
+
+.alert-info {
+  background-color: var(--uia-accent2);
+  color: var(--uia-bottom-bar);
+  border: none;
+}
+
+.alert .close {
+  color: currentColor;
+  opacity: 0.8;
+}
+
+.alert .close:hover {
+  opacity: 1;
+}

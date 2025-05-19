@@ -78,7 +78,7 @@
 
   <!-- Toggel dataset type -->
   <div class="upload-type-toggle mb-4">
-    <h4>Upload Type:</h4>
+    <h4>Dataset Type:</h4>
     <div class="btn-group" role="group">
       <button
         type="button"
@@ -98,61 +98,123 @@
   </div>
 
   <!-- Upload data -->
-  <form
-    method="POST"
-    enctype="multipart/form-data"
-    class="upload-form mb-4"
-    id="custom-upload-form"
-  >
-    <div class="upload-area">
-      <input
-        type="file"
-        name="folder[]"
-        webkitdirectory
-        directory
-        multiple
-        class="file-input"
-        required
-      />
-      <p class="upload-instructions">
-        Each folder should contain images of one class. You need to add atleast
-        two classes.
-      </p>
-      <p class="text-muted">
-        Click <strong class="text-colored">Add Class Folder</strong> after
-        confirming the name before adding more!<br />
-        You can use the folder name as the class label, or choose your own!
-      </p>
-    </div>
-
-    <div class="selected-folder-info" style="display: none">
-      <h4>To upload:</h4>
-      <p id="folder-name"></p>
-      <p id="image-count"></p>
-
-      <div class="form-group mt-3">
-        <label for="class-name">Class Name:</label>
+  <div id="custom-upload-container">
+    <form
+      method="POST"
+      enctype="multipart/form-data"
+      class="upload-form mb-4"
+      id="custom-upload-form"
+    >
+      <div class="upload-area">
         <input
-          type="text"
-          id="class-name"
-          name="class_name"
-          class="form-control"
+          type="file"
+          name="folder[]"
+          webkitdirectory
+          directory
+          multiple
+          class="file-input"
           required
         />
-        <small class="form-text text-muted"
-          >Edit this to change the class name</small
-        >
+        <p class="upload-instructions">
+          Each folder should contain images of one class. You need to add atleast
+          two classes.
+        </p>
+        <p class="text-muted">
+          Click <strong class="text-colored">Add Class Folder</strong> after
+          confirming the name before adding more!<br />
+          You can use the folder name as the class label, or choose your own!
+        </p>
       </div>
-      <button type="submit" class="btn btn-primary" id="upload_folder">
-        Add Class Folder
-      </button>
+
+      <div class="selected-folder-info" style="display: none">
+        <h4>To upload:</h4>
+        <p id="folder-name"></p>
+        <p id="image-count"></p>
+
+        <div class="form-group mt-3">
+          <label for="class-name">Class Name:</label>
+          <input
+            type="text"
+            id="class-name"
+            name="class_name"
+            class="form-control"
+            required
+          />
+          <small class="form-text text-muted"
+            >Edit this to change the class name</small
+          >
+        </div>
+        <button type="submit" class="btn btn-primary" id="upload_folder">
+          Add Class Folder
+        </button>
+      </div>
+    </form>
+
+    <!-- Upload images -->
+    <div class="uploaded-classes">
+      <h3>Uploaded Classes:</h3>
+      <div id="uploaded-class-list">
+        {% if uploaded_classes and uploaded_classes|length > 0 %}
+        <div class="row">
+          {% for class_info in uploaded_classes %}
+          <div class="col-md-6 mb-3">
+            <div class="class-card">
+              <div class="class-header">
+                <i class="fas fa-folder-open"></i>
+                <h5>{{ class_info.name | e }}</h5>
+              </div>
+              <div class="class-stats">
+                <span class="badge badge-info"
+                  >{{ class_info.count }} images</span
+                >
+              </div>
+              <button
+                class="btn btn-sm btn-danger remove-class"
+                data-class-name="{{ class_info.name | e }}"
+              >
+                <i class="fas fa-trash"></i> Remove Class
+              </button>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+
+        {% if uploaded_classes|length >= 2 %}
+        <button
+          id="continue-btn"
+          class="btn btn-secondary mt-3"
+          onclick="completeStep1()"
+        >
+          Continue to Preprocessing
+        </button>
+        {% else %}
+        <p class="text-muted mt-3">
+          No classes uploaded. Upload at least 2 classes to continue.
+        </p>
+        {% endif %} {% else %}
+        <p class="text-muted" id="no-classes-message">
+          No classes uploaded yet. Upload at least 2 classes.
+        </p>
+        {% endif %}
+      </div>
     </div>
-  </form>
+  </div>
+
+  <!-- Clear classes button -->
+<div id="clear-classes-btn" style="display: none; margin-bottom: 20px; text-align: center;">
+  <div class="alert alert-warning">
+    <p><strong>Note:</strong> You have uploaded classes. Delete these before continuing with a pre-defined dataset.</p>
+    <button type="button" class="btn btn-danger" onclick="clearAllClasses()">
+      <i class="fas fa-trash"></i> Clear All Classes
+    </button>
+  </div>
+</div>
 
   <!-- Pre-Created datasets -->
   <form
     method="POST"
     action="{{ url_for('views.upload') }}"
+    enctype="multipart/form-data"
     class="preCreated-dataset-form mb-4"
     id="preCreated-dataset-form"
     style="display: none"
@@ -226,52 +288,4 @@
       Use selected dataset
     </button>
   </form>
-
-  <div class="uploaded-classes">
-    <h3>Uploaded Classes:</h3>
-    <div id="uploaded-class-list">
-      {% if session.get('uploaded_classes', [])|length > 0 %}
-      <div class="row">
-        {% for class_info in session.get('uploaded_classes', []) %}
-        <div class="col-md-6 mb-3">
-          <div class="class-card">
-            <div class="class-header">
-              <i class="fas fa-folder-open"></i>
-              <h5>{{ class_info.name }}</h5>
-            </div>
-            <div class="class-stats">
-              <span class="badge badge-info"
-                >{{ class_info.count }} images</span
-              >
-            </div>
-            <button
-              class="btn btn-sm btn-danger remove-class"
-              data-class-name="{{ class_info.name }}"
-            >
-              <i class="fas fa-trash"></i> Remove Class
-            </button>
-          </div>
-        </div>
-        {% endfor %}
-      </div>
-
-      {% if session.get('uploaded_classes', [])|length >= 2 %}
-      <button
-        id="continue-btn"
-        class="btn btn-secondary mt-3"
-        onclick="completeStep1()"
-      >
-        Continue to Preprocessing
-      </button>
-      {% else %}
-      <p class="text-muted mt-3">
-        No classes uploaded. Upload at least 2 classes to continue.
-      </p>
-      {% endif %} {% else %}
-      <p class="text-muted" id="no-classes-message">
-        No classes uploaded yet. Upload at least 2 classes.
-      </p>
-      {% endif %}
-    </div>
-  </div>
 </div>

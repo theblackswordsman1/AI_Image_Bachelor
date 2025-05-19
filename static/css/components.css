@@ -220,12 +220,15 @@
   display: block;
 }
 
+/* Term Definition */
 .definition {
   display: none;
   margin-top: 10px;
   margin-bottom: 10px;
-  padding: 10px;
+  padding: 15px;
   background-color: var(--uia-accent2);
+  border-left: 4px solid var(--uia-main);
+  font-size: 0.9em;
   border-radius: 5px;
 }
 
@@ -239,6 +242,15 @@
   padding: 15px !important;
   margin-left: 2% !important;
   margin-right: 2% !important;
+}
+
+.definition.wide {
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  margin-top: 5px !important;
+  margin-bottom: 5px !important;
+  width: 100%;
+  padding: 15px;
 }
 
 /* Headers */
@@ -328,25 +340,6 @@
   align-items: center;
   border-bottom: 1px solid var(--border-color);
   position: relative;
-}
-
-/* Term Definition */
-.definition {
-  display: none;
-  margin-top: 10px;
-  margin-bottom: 20px;
-  padding: 15px;
-  background-color: var(--uia-accent2);
-  border-left: 4px solid var(--uia-main);
-  font-size: 0.9em;
-}
-
-/* .definition.active {
-  display: block;
-} */
-
-.definition.show {
-  display: block;
 }
 
 /* Temp */

@@ -1,5 +1,111 @@
 <div class="container">
-  <!-- <h1>Model Code and Training - working on...</h1> -->
+  <!-- <h1>Model Code and Training</h1> -->
 
+  <div class="row mb-4">
+    <div class="col-12">
+      <div class="button-card">
+        <h5 class="card-title"></h5>
+        <div class="d-flex justify-content-center mb-3">
+          <button
+            class="btn btn-success btn-lg px-4 py-2 mx-2"
+            onclick="startTraining()"
+          >
+            Train Model
+          </button>
+          <button
+            class="btn btn-primary btn-lg px-4 py-2 mx-2"
+            onclick="toggleCode()"
+          >
+            Show Code
+          </button>
+        </div>
+        <pre
+          id="codeBlock"
+          style="display: none"
+        ><code class="python">{{ generated_code }}</code></pre>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-12">
+      <div class="card evaluation-card">
+        <div class="card-body">
+          <h5 class="card-title">Training Progress:</h5>
+          <div id="trainingOutput" class="bg-light text-dark p-3 rounded">
+            <p class="text-muted">Click Train Model to Start...</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function toggleCode() {
+      const codeBlock = document.getElementById("codeBlock");
+      codeBlock.style.display =
+        codeBlock.style.display === "none" ? "block" : "none";
+    }
+
+    function startTraining() {
+      const trainingOutput = document.getElementById("trainingOutput");
+      trainingOutput.innerHTML =
+        "<p class='text-info'>Starting training...</p>";
+
+      fetch("/train-model", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "same-origin",
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.status === "success") {
+            trainingOutput.innerHTML = `<p class='text-success'>${data.message}</p>`;
+            checkTrainingStatus();
+          } else {
+            trainingOutput.innerHTML = `<p class='text-danger'>Error: ${data.message}</p>`;
+          }
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+          trainingOutput.innerHTML = `<p class='text-danger'>Error: ${error.message}</p>`;
+        });
+    }
+
+    function checkTrainingStatus() {
+      const trainingOutput = document.getElementById("trainingOutput");
+
+      fetch("/training-status", {
+        credentials: "same-origin",
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.status === "running") {
+            if (data.message && data.message.trim()) {
+              trainingOutput.innerHTML += `<p class='text-info'>${data.message}</p>`;
+            }
+            trainingOutput.scrollTop = trainingOutput.scrollHeight;
+            setTimeout(checkTrainingStatus, 2000);
+          } else if (data.status === "completed") {
+            trainingOutput.innerHTML += `
+          <div class='text-success'>
+            <p><strong>Training completed:</strong></p>
+            <p>Final accuracy: ${(data.accuracy * 100).toFixed(2)}%</p>
+            <p>Model saved as: ${data.model_path}</p>
+          </div>
+        `;
+            trainingOutput.scrollTop = trainingOutput.scrollHeight;
+          } else {
+            trainingOutput.innerHTML += `<p class='text-danger'>Error: ${data.message}</p>`;
+          }
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+          trainingOutput.innerHTML += `<p class='text-danger'>Error: ${error.message}</p>`;
+          trainingOutput.scrollTop = trainingOutput.scrollHeight;
+        });
+    }
   </script>
 </div>
