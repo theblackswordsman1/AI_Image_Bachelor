@@ -9,20 +9,55 @@
     <div class="row">
       <div class="col-md-6">
         <div class="form-group">
-          <label for="batch-size">Batch Size:</label>
+          <!-- Info toggle  -->
+          <div class="label-with-info">
+            <label for="batch-size">Batch Size:</label>
+            <a
+              href="#"
+              class="info-toggle"
+              onclick="toggleDefinition(event, 'batch-size-info'); event.stopPropagation();"
+            >
+              <i class="fas fa-question-circle"></i>
+            </a>
+          </div>
+
+          <div
+            id="batch-size-info"
+            class="definition definition-info wide"
+            style="display: none"
+          >
+            <p>Info coming....</p>
+          </div>
+
           <select name="batch_size" id="batch-size" class="form-control">
             <option value="16">16 (slower, more stable)</option>
             <option value="32" selected>32 (standard)</option>
             <option value="64">64 (faster, less stable)</option>
             <option value="128">128 (fastest, less stable)</option>
           </select>
-          <small class="form-text text-muted"
-            >How many samples are processed before updating the model...</small
-          >
         </div>
 
         <div class="form-group">
-          <label for="epochs">Number of Epochs:</label>
+          <!-- Info toggle  -->
+          <div class="label-with-info">
+            <label for="epochs">Number of Epochs:</label>
+            <a
+              href="#"
+              class="info-toggle"
+              onclick="toggleDefinition(event, 'epochs-info'); event.stopPropagation();"
+            >
+              <i class="fas fa-question-circle"></i>
+            </a>
+          </div>
+
+          <div
+            id="epochs-info"
+            class="definition definition-info wide"
+            style="display: none"
+          >
+            <p>Info coming....</p>
+          </div>
+
           <input
             type="number"
             name="epochs"
@@ -32,23 +67,35 @@
             value="10"
             class="form-control"
           />
-          <small class="form-text text-muted"
-            >How many times the model goes through the dataset....
-          </small>
         </div>
       </div>
 
       <div class="col-md-6">
         <div class="form-group">
-          <label for="learning-rate">Learning Rate:</label>
+          <!-- Info toggle  -->
+          <div class="label-with-info">
+            <label for="learning-rate">Learning Rate:</label>
+            <a
+              href="#"
+              class="info-toggle"
+              onclick="toggleDefinition(event, 'learning-rate-info'); event.stopPropagation();"
+            >
+              <i class="fas fa-question-circle"></i>
+            </a>
+          </div>
+
+          <div
+            id="learning-rate-info"
+            class="definition definition-info wide"
+            style="display: none"
+          >
+            <p>Info coming....</p>
+          </div>
           <select name="learning_rate" id="learning-rate" class="form-control">
             <option value="0.01">0.01 (fast)</option>
             <option value="0.001" selected>0.001 (standard)</option>
             <option value="0.0001">0.0001 (slow)</option>
           </select>
-          <small class="form-text text-muted"
-            >Controls how much the models weights are updated...</small
-          >
         </div>
       </div>
     </div>
@@ -56,7 +103,25 @@
     <div class="row mt-3">
       <div class="col-md-6">
         <div class="form-group">
-          <label for="patience">Early Stopping Patience:</label>
+          <!-- Info toggle  -->
+          <div class="label-with-info">
+            <label for="patience">Early Stopping Patience:</label>
+            <a
+              href="#"
+              class="info-toggle"
+              onclick="toggleDefinition(event, 'patience-info'); event.stopPropagation();"
+            >
+              <i class="fas fa-question-circle"></i>
+            </a>
+          </div>
+
+          <div
+            id="patience-info"
+            class="definition definition-info wide"
+            style="display: none"
+          >
+            <p>Info coming....</p>
+          </div>
           <input
             type="number"
             name="patience"
@@ -66,10 +131,6 @@
             value="5"
             class="form-control"
           />
-          <small class="form-text text-muted"
-            >Number of epochs with no improvement that training will stop
-            after...</small
-          >
         </div>
       </div>
     </div>

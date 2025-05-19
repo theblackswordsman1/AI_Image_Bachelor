@@ -7,7 +7,7 @@ from werkzeug.utils import secure_filename
 from extensions import db
 from models import User, RegisterForm, LoginForm
 import os
-# from utils.code_generator import CNNCodeGenerator
+from utils.code_generator import CNNCodeGenerator
 import functools
 import tensorflow as tf
 from tensorflow.keras.datasets import mnist, cifar10
@@ -105,13 +105,6 @@ def logout():
         session.pop('current_user', None)
         flash('You have been logged out!', 'info')
     return redirect(url_for('views.home'))
-
-# Cnn image classification
-@views.route("/cnn-classification", methods=["GET", "POST"])
-def cnn_classification():
-    if 'current_step' not in session:
-        session['current_step'] = 1
-    return render_template("cnn_classification.html")
 
 # Step 1, data upload
 @views.route("/upload", methods=["GET", "POST"])
@@ -250,6 +243,22 @@ def upload():
             })
          
     return render_template("cnn_classification.html", uploaded_classes=session.get('uploaded_classes', []))
+
+# Clear classes
+@views.route("/clear-classes", methods=["POST"])
+def clear_classes():
+    
+    done_steps = session.get('done_steps', [])
+    if 1 in done_steps:
+        done_steps.remove(1)
+        session['done_steps'] = done_steps
+    
+    session.modified = True
+    
+    return jsonify({
+        'status': 'success',
+        'message': 'All classes cleared!'
+    })
 
 # Remove class
 @views.route("/remove-class/<class_name>", methods=["POST"])
@@ -480,6 +489,65 @@ def check_training_status():
         'message': 'Training not started'
     }), 200
 
+# Training
+def run_training(session_data, training_status):
+    try:
+        from app import app
+        import tensorflow as tf
+        import numpy as np
+        from PIL import Image
+        import os
+        import shutil
+
+        with app.app_context():
+            data_dir = os.path.join(app.instance_path, 'training_data')
+            train_dir = os.path.join(data_dir, 'train')
+            val_dir = os.path.join(data_dir, 'val')
+            test_dir = os.path.join(data_dir, 'test')
+            
+            session_data['data_paths'] = {
+                'train_dir': train_dir,
+                'val_dir': val_dir,
+                'test_dir': test_dir
+            }
+            
+            def custom_print(*args, **kwargs):
+                message = ' '.join(map(str, args))
+                training_status['output_queue'].put(message)
+                print(message)
+            
+            training_status['output_queue'].put("Starting training process...")
+            
+            generator = CNNCodeGenerator(session_data)
+            code = generator.generate_complete_code()
+            code = code.replace('print(', 'custom_print(')
+            
+            globals_dict = {
+                'tf': tf,
+                'np': np,
+                'os': os,
+                'Image': Image,
+                'shutil': shutil,
+                'app': app,
+                'custom_print': custom_print
+            }
+            local_vars = {}
+            
+            exec(code, globals_dict, local_vars)
+            
+            if 'model' in local_vars:
+                training_status['model_path'] = os.path.join(data_dir, 'final_model.h5')
+                history = local_vars.get('history')
+                if history and hasattr(history, 'history'):
+                    val_acc = history.history.get('val_accuracy', [])
+                    if val_acc:
+                        training_status['accuracy'] = float(val_acc[-1])
+
+    except Exception as e:
+        training_status['error'] = str(e)
+        print(f"Training error: {str(e)}")
+    finally:
+        training_status['is_running'] = False
 
 @views.route("/update-step", methods=["POST"])
 def update_step():
@@ -506,6 +574,13 @@ def update_step():
         return jsonify({'status': 'error', 'message': 'Invalid step update'})
     except Exception as e:
         return jsonify({'status': 'error', 'message': str(e)})
+
+# Cnn image classification
+@views.route("/cnn-classification", methods=["GET", "POST"])
+def cnn_classification():
+    if 'current_step' not in session:
+        session['current_step'] = 1
+    return render_template("cnn_classification.html")
 
 
 # Empty pages

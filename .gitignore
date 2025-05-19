@@ -9,6 +9,11 @@ env/
 venv/
 ENV/
 
+# PyInstaller
+build/
+dist/
+*.spec
+
 # Flask
 instance/
 .webassets-cache
@@ -40,3 +45,29 @@ env/
 .Trashes
 ehthumbs.db
 Thumbs.db
+
+# ML
+*.h5
+*.pb
+*.ckpt
+saved_models/
+
+# Data files
+datasets/
+*.csv
+*.npy
+*.npz
+*.pkl
+
+# Testing and documentation
+.coverage
+htmlcov/
+.pytest_cache/
+.ipynb_checkpoints/
+
+# Logs
+logs/
+*.log
+
+.eggs/
+*.egg-info/

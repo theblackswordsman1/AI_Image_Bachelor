@@ -18,7 +18,7 @@
             href="#"
             class="info-toggle"
             data-target="size-info"
-            onclick="toggleDefinition('resizing-info'); event.stopPropagation();"
+            onclick="toggleDefinition(event, 'resizing-info'); event.stopPropagation();"
           >
             <i class="fas fa-question-circle"></i>
           </a>
@@ -80,7 +80,7 @@
             href="#"
             class="info-toggle"
             data-target="size-info"
-            onclick="toggleDefinition('augmentation-info'); event.stopPropagation();"
+            onclick="toggleDefinition(event, 'augmentation-info'); event.stopPropagation();"
           >
             <i class="fas fa-question-circle"></i>
           </a>
@@ -138,13 +138,32 @@
 
     <!-- Split -->
     <div class="form-group collapsible-section" id="dataset-split-section">
+      <!-- Header and info toggle -->
       <div
         class="section-header"
         onclick="toggleSection('dataset-split-section')"
       >
         <h3>Dataset Split</h3>
-        <div class="checkmark"></div>
+        <div class="info-toggle-container">
+          <a
+            href="#"
+            class="info-toggle"
+            data-target="size-info"
+            onclick="toggleDefinition(event, 'dataset-split-info'); event.stopPropagation();"
+          >
+            <i class="fas fa-question-circle"></i>
+          </a>
+        </div>
       </div>
+
+      <div
+        id="dataset-split-info"
+        class="definition definition-info"
+        style="display: none"
+      >
+        <p>Info coming here...</p>
+      </div>
+
       <div class="collapsible-content">
         <label for="train-split">Training set size (%):</label>
         <input

@@ -174,11 +174,17 @@ function handleInfoToggleClick(e) {
   }
 }
 
-function toggleDefinition(definitionId) {
+function toggleDefinition(e, definitionId) {
   const definition = document.getElementById(definitionId);
   if (!definition) return;
 
-  event.preventDefault();
+  e.preventDefault();
+  if (!definition.closest(".collapsible-section")) {
+    definition.style.display =
+      definition.style.display === "none" ? "block" : "none";
+    return;
+  }
+
   const section = definition.closest(".collapsible-section");
   const content = section
     ? section.querySelector(".collapsible-content")
@@ -216,6 +222,29 @@ function removeClass(className) {
   }
 }
 
+// Clear classes
+function clearAllClasses() {
+  if (confirm("Are you sure you want to remove all the classes?")) {
+    fetch("/clear-classes", {
+      method: "POST",
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.status === "success") {
+          updateClassList([]);
+          document.getElementById("clear-classes-btn").style.display = "none";
+          alert("All classes removed!.");
+        } else {
+          alert(data.message || "Error removing classes");
+        }
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+        alert("Error removing classes");
+      });
+  }
+}
+
 // Main DOM
 document.addEventListener("DOMContentLoaded", function () {
   const trainSplitInput = document.getElementById("train-split");
@@ -231,7 +260,6 @@ document.addEventListener("DOMContentLoaded", function () {
   const clickableTerms = document.querySelectorAll(".clickable-term");
   const datasetCards = document.querySelectorAll(".dataset-card-wrapper");
 
-  // document.removeEventListener("click", handleInfoToggleClick);
   document.addEventListener("click", handleInfoToggleClick);
 
   // Dataset toggle
@@ -246,6 +274,7 @@ document.addEventListener("DOMContentLoaded", function () {
     customUploadForm.style.display = "block";
     preCreatedDatasetForm.style.display = "none";
     document.querySelector(".uploaded-classes").style.display = "block";
+    document.getElementById("clear-classes-btn").style.display = "none";
   });
 
   preCreatedDataBtn.addEventListener("click", function () {
@@ -259,6 +288,11 @@ document.addEventListener("DOMContentLoaded", function () {
     customUploadForm.style.display = "none";
     preCreatedDatasetForm.style.display = "block";
     document.querySelector(".uploaded-classes").style.display = "none";
+
+    const uploadedClasses = document.querySelectorAll(".class-card");
+    if (uploadedClasses.length > 0) {
+      document.getElementById("clear-classes-btn").style.display = "block";
+    }
   });
 
   // Files
@@ -305,8 +339,15 @@ document.addEventListener("DOMContentLoaded", function () {
             uploadForm.reset();
             const folderInfo = document.querySelector(".selected-folder-info");
             if (folderInfo) folderInfo.style.display = "none";
+            document.querySelector(".uploaded-classes").style.display = "block";
 
-            updateClassList(data.classes);
+            const classListContainer = document.getElementById(
+              "uploaded-class-list"
+            );
+            if (classListContainer) {
+              updateClassList(data.classes);
+            }
+
             alert(data.message);
           } else {
             alert(data.message || "Error uploading class");
