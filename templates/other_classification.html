@@ -1,40 +1,60 @@
-{% extends "layout.html" %} 
-{% block page_title %}Welcome{% endblock %} 
-{% block body %}
+{% extends "layout.html" %} {% block page_title %}Welcome{% endblock %} {% block
+body %}
 
 <!-- templates/index.html -->
 <style>
-.container {
-        display: flex;
-        gap: 2em;
-}
-.venstre {
-        flex: 2;
-}
-.høyre {
-        flex: 1;
-        background: #f9f9f9;
-        padding: 1em;
-        border-left: 2px solid #ccc;
-        height: 100vh;
-        overflow-y: auto;
-}
+  .container {
+    display: flex;
+    gap: 2em;
+  }
+  .venstre {
+    flex: 2;
+  }
+  .høyre {
+    flex: 1;
+    background: #f9f9f9;
+    padding: 1em;
+    border-left: 2px solid #ccc;
+    height: 100vh;
+    overflow-y: auto;
+  }
 
-body { font-family: Arial, sans-serif; padding: 2em; }
-button, select, input[type=radio], input[type=checkbox], label { margin: 0.5em; padding: 0.5em 1em; font-size: 1em; }
-button.selected { background-color: #4CAF50; color: white; }
-textarea { width: 100%; height: 300px; margin-top: 1em; font-family: monospace; }
-.trinn { margin-top: 1.5em; }
+  .pt-container {
+    font-family: Arial, sans-serif;
+    padding: 2em;
+  }
+  button,
+  select,
+  input[type="radio"],
+  input[type="checkbox"],
+  label {
+    margin: 0.5em;
+    padding: 0.5em 1em;
+    font-size: 1em;
+  }
+  button.selected {
+    background-color: #4caf50;
+    color: white;
+  }
+  textarea {
+    width: 100%;
+    height: 300px;
+    margin-top: 1em;
+    font-family: monospace;
+  }
+  .trinn {
+    margin-top: 1.5em;
+  }
 </style>
 
 <script>
-let valgtDatasett = "";
-let treningsandel = 0.8;
-let valgteKlasser = [];
-let antallEpoker = 5;
-let lr = null;
+  let valgtDatasett = "";
+  let treningsandel = 0.8;
+  let valgteKlasser = [];
+  let antallEpoker = 5;
+  let lr = null;
 
-function velgDatasett(type) {
+  function velgDatasett(type) {
     valgtDatasett = type;
     markerValgt("trinn1", type);
     document.getElementById("trinn2").style.display = "block";
@@ -43,55 +63,55 @@ function velgDatasett(type) {
     document.getElementById("trinn5").style.display = "none";
     document.getElementById("nb").style.display = "none";
     document.getElementById("kodeboks").value = "";
-}
+  }
 
-function velgFordeling(valg) {
+  function velgFordeling(valg) {
     if (valg === "custom") {
-    const input = prompt("Skriv inn treningsandel (mellom 0 og 1):", "0.8");
-    treningsandel = parseFloat(input);
-    markerValgt("trinn2", "egendefinert");
+      const input = prompt("Skriv inn treningsandel (mellom 0 og 1):", "0.8");
+      treningsandel = parseFloat(input);
+      markerValgt("trinn2", "egendefinert");
     } else {
-    treningsandel = parseFloat(valg);
-    if (valg === "0.8") {
+      treningsandel = parseFloat(valg);
+      if (valg === "0.8") {
         markerValgt("trinn2", "80/20");
-    } else if (valg === "0.7") {
+      } else if (valg === "0.7") {
         markerValgt("trinn2", "70/30");
-    }
+      }
     }
     document.getElementById("trinn3").style.display = "block";
     oppdaterKlasser();
-}
+  }
 
-function velgKlasseCheckbox(klasse, checkbox) {
+  function velgKlasseCheckbox(klasse, checkbox) {
     const verdi = parseInt(klasse);
     if (checkbox.checked) {
-    if (!valgteKlasser.includes(verdi)) {
+      if (!valgteKlasser.includes(verdi)) {
         valgteKlasser.push(verdi);
-    }
+      }
     } else {
-    valgteKlasser = valgteKlasser.filter((k) => k !== verdi);
+      valgteKlasser = valgteKlasser.filter((k) => k !== verdi);
     }
     document.getElementById("trinn4").style.display = "block";
     leggTilForklaring("epoker");
-}
+  }
 
-function velgEpoker(epoker) {
+  function velgEpoker(epoker) {
     antallEpoker = parseInt(epoker);
     markerValgt("trinn4", epoker);
     document.getElementById("trinn5").style.display = "block";
     genererKode();
-}
+  }
 
-function velgLr(verdi) {
+  function velgLr(verdi) {
     lr = parseFloat(verdi);
     markerValgt("trinn5", verdi);
     document.getElementById("nb").style.display = "block";
     genererKode();
-}
+  }
 
-function genererKode() {
+  function genererKode() {
     if (lr === null) {
-    return;
+      return;
     }
 
     let kode = "";
@@ -103,18 +123,18 @@ function genererKode() {
     // InputChannels: 1 = Gråskala (svart/hvitt), 3 = RGB (fargebilder)
     // InputSize: Størrelsen på bildene
     if (valgtDatasett === "mnist") {
-    datasetImport = "datasets.FashionMNIST";
-    inputChannels = 1;
-    inputSize = 28;
+      datasetImport = "datasets.FashionMNIST";
+      inputChannels = 1;
+      inputSize = 28;
     } else if (valgtDatasett === "cifar10") {
-    datasetImport = "datasets.CIFAR10";
-    inputChannels = 3;
-    inputSize = 32;
+      datasetImport = "datasets.CIFAR10";
+      inputChannels = 3;
+      inputSize = 32;
     }
 
     if (valgteKlasser.length === 0) {
-    alert("Du må velge minst en klasse før du kan generere koden");
-    return;
+      alert("Du må velge minst en klasse før du kan generere koden");
+      return;
     }
 
     let filtrering = `
@@ -153,7 +173,7 @@ function genererKode() {
                         nn.MaxPool2d(2),
                         nn.Flatten(),
                         nn.Linear(32 * ${Math.floor(
-                            inputSize / 2
+                          inputSize / 2
                         )} * ${Math.floor(inputSize / 2)}, 128),
                         nn.ReLU(),
                         nn.Linear(128, 10)
@@ -186,70 +206,70 @@ function genererKode() {
             print(f"Test Accuracy: {correct / total:.2f}")`;
 
     document.getElementById("kodeboks").value = kode;
-}
+  }
 
-function kopierKode() {
+  function kopierKode() {
     const tekstboks = document.getElementById("kodeboks");
     tekstboks.select();
     tekstboks.setSelectionRange(0, 99999);
     document.execCommand("copy");
     alert("Koden er kopiert til utklippstavlen!");
-}
+  }
 
-function markerValgt(trinnId, verdi) {
+  function markerValgt(trinnId, verdi) {
     const container = document.getElementById(trinnId);
     const knapper = container.getElementsByTagName("button");
     for (let knapp of knapper) {
-    if (knapp.dataset.verdi === verdi) {
+      if (knapp.dataset.verdi === verdi) {
         knapp.classList.add("selected");
-    } else {
+      } else {
         knapp.classList.remove("selected");
+      }
     }
-    }
-}
+  }
 
-const klasser = {
+  const klasser = {
     mnist: [
-    "T-skjorte/topp",
-    "Bukser",
-    "Genser",
-    "Kjole",
-    "Frakk",
-    "Sandal",
-    "Skjorte",
-    "Joggesko",
-    "Veske",
-    "Ankelstøvel",
+      "T-skjorte/topp",
+      "Bukser",
+      "Genser",
+      "Kjole",
+      "Frakk",
+      "Sandal",
+      "Skjorte",
+      "Joggesko",
+      "Veske",
+      "Ankelstøvel",
     ],
     cifar10: [
-    "Fly",
-    "Bil",
-    "Fugl",
-    "Katt",
-    "Hjort",
-    "Hund",
-    "Frosk",
-    "Hest",
-    "Skip",
-    "Lastebil",
+      "Fly",
+      "Bil",
+      "Fugl",
+      "Katt",
+      "Hjort",
+      "Hund",
+      "Frosk",
+      "Hest",
+      "Skip",
+      "Lastebil",
     ],
-};
+  };
 
-function oppdaterKlasser() {
+  function oppdaterKlasser() {
     const container = document.getElementById("klasse-container");
     container.innerHTML = "";
 
     const valgtKlasser = klasser[valgtDatasett];
     valgtKlasser.forEach((navn, index) => {
-    const label = document.createElement("label");
-    label.innerHTML = `<input type="checkbox" onchange="velgKlasseCheckbox(${index}, this)"> ${navn} (${index})`;
-    container.appendChild(label);
+      const label = document.createElement("label");
+      label.innerHTML = `<input type="checkbox" onchange="velgKlasseCheckbox(${index}, this)"> ${navn} (${index})`;
+      container.appendChild(label);
     });
 
     container.style.display = "block";
-}
+  }
 
-/*
+  /*
     function visKlassevalg() {
         oppdaterKlasser(); // Fyller ut klassene
         document.getElementById("klasse-container").style.display = "block";
@@ -257,178 +277,171 @@ function oppdaterKlasser() {
     }
     */
 </script>
-</head>
-<body>
+
 <div class="container">
-<div class="venstre">
+  <div class="venstre">
     <h1>AI-modelltrener</h1>
 
     <div class="trinn" id="trinn1">
-    <strong>Trinn 1: Velg datasett</strong><br />
-    <button
+      <strong>Trinn 1: Velg datasett</strong><br />
+      <button
         data-verdi="mnist"
         onclick="velgDatasett('mnist'); leggTilForklaring('fordeling')"
-    >
+      >
         Fashion MNIST
-    </button>
-    <button
+      </button>
+      <button
         data-verdi="cifar10"
         onclick="velgDatasett('cifar10'); leggTilForklaring('fordeling')"
-    >
+      >
         CIFAR-10
-    </button>
+      </button>
     </div>
 
     <div class="trinn" id="trinn2" style="display: none">
-    <strong>Trinn 2: Velg fordeling mellom trening og test data</strong
-    ><br />
-    <button
+      <strong>Trinn 2: Velg fordeling mellom trening og test data</strong><br />
+      <button
         data-verdi="80/20"
         onclick="velgFordeling('0.8'); leggTilForklaring('klassevalg')"
-    >
+      >
         80/20
-    </button>
-    <button
+      </button>
+      <button
         data-verdi="70/30"
         onclick="velgFordeling('0.7'); leggTilForklaring('klassevalg')"
-    >
+      >
         70/30
-    </button>
-    <button
+      </button>
+      <button
         data-verdi="egendefinert"
         onclick="velgFordeling('custom'); leggTilForklaring('klassevalg')"
-    >
+      >
         Egendefinert
-    </button>
+      </button>
     </div>
 
     <div class="trinn" id="trinn3" style="display: none">
-    <strong>Trinn 3: Velg hvilke klasser du bil trene på</strong><br />
-    <div id="klasse-container" style="display: none"></div>
+      <strong>Trinn 3: Velg hvilke klasser du bil trene på</strong><br />
+      <div id="klasse-container" style="display: none"></div>
     </div>
 
     <div class="trinn" id="trinn4" style="display: none">
-    <strong>Trinn 4: Velg antall epoker</strong><br />
-    <button
-        data-verdi="5"
-        onclick="velgEpoker('5'); leggTilForklaring('lr')"
-    >
+      <strong>Trinn 4: Velg antall epoker</strong><br />
+      <button data-verdi="5" onclick="velgEpoker('5'); leggTilForklaring('lr')">
         5
-    </button>
-    <button
+      </button>
+      <button
         data-verdi="10"
         onclick="velgEpoker('10'); leggTilForklaring('lr')"
-    >
+      >
         10
-    </button>
-    <button
+      </button>
+      <button
         data-verdi="20"
         onclick="velgEpoker('20'); leggTilForklaring('lr')"
-    >
+      >
         20
-    </button>
+      </button>
     </div>
 
     <div class="trinn" id="trinn5" style="display: none">
-    <strong>Trinn 5: Velg læringsrate</strong><br />
-    <button
+      <strong>Trinn 5: Velg læringsrate</strong><br />
+      <button
         data-verdi="0.001"
         onclick="velgLr('0.001'); leggTilForklaring('lr')"
-    >
+      >
         0.001
-    </button>
-    <button
+      </button>
+      <button
         data-verdi="0.01"
         onclick="velgLr('0.01'); leggTilForklaring('lr')"
-    >
+      >
         0.01
-    </button>
-    <button
-        data-verdi="0.1"
-        onclick="velgLr('0.1'); leggTilForklaring('lr')"
-    >
+      </button>
+      <button data-verdi="0.1" onclick="velgLr('0.1'); leggTilForklaring('lr')">
         0.1
-    </button>
+      </button>
     </div>
 
     <div class="trinn" id="nb" style="display: none">
-    <strong
-        >NB: Når koden er ferdig med å kjøres så vil du få ut en 'Test
-        Accuracy' mellom 0.00 og 1.00. Dette er nøyaktighet, du ønsker minimum
-        0.95 som tilsvarer 95% nøyaktighet. Om du ønsker å endre noen
-        variabler etter at kode er generert, last siden inn på nytt.</strong
-    ><br />
+      <strong
+        >NB: Når koden er ferdig med å kjøres så vil du få ut en 'Test Accuracy'
+        mellom 0.00 og 1.00. Dette er nøyaktighet, du ønsker minimum 0.95 som
+        tilsvarer 95% nøyaktighet. Om du ønsker å endre noen variabler etter at
+        kode er generert, last siden inn på nytt.</strong
+      ><br />
     </div>
 
     <button onclick="kopierKode()">Kopier kode</button>
     <textarea id="kodeboks" placeholder="Kode vises her..."></textarea>
-</div>
+  </div>
 
-<div class="høyre">
+  <div class="høyre">
     <h2>Ordbok</h2>
     <div id="ordbok"></div>
-</div>
+  </div>
 
-<script>
+  <script>
     const introduksjon =
-    "Velkommen! Her kan du bygge og trene en AI-modell steg for steg. Start med å velge datasett!";
+      "Velkommen! Her kan du bygge og trene en AI-modell steg for steg. Start med å velge datasett!";
 
     const forklaringer = {
-    datasett:
+      datasett:
         "Velg hvilket datasett du ønsker å trene AI-modellen på. Fashion MNIST inneholder klær, CIFAR-10 inneholder biler, dyr og skip.",
-    fordeling:
+      fordeling:
         "Trenings-/test-fordeling bestemmer hvor mye av dataene som brukes til å trene modellen, og hvor mye som brukes til å sjekke hvor bra modellen er.",
-    klassevalg:
+      klassevalg:
         "Ved å velge spesifikke klasser trener du modellen kun på utvalgte kategorier, som for eksempel bare bukser eller kun sandaler.",
-    epoker:
+      epoker:
         "Epoker forteller hvor mange ganger modellen skal gå gjennom hele treningsdatasettet for å lære best mulig.",
-    lr: "Læringsrate styrer hvor store steg modellen tar når den lærer. Lav verdi = små steg og tryggere læring. Høy verdi = raskere, men kan gjøre modellen ustabil.",
+      lr: "Læringsrate styrer hvor store steg modellen tar når den lærer. Lav verdi = små steg og tryggere læring. Høy verdi = raskere, men kan gjøre modellen ustabil.",
     };
 
     const nesteForklaring = {
-    start: "datasett",
-    datasett: "fordeling",
-    fordeling: "klassevalg",
-    klassevalg: "epoker",
-    epoker: "lr",
-    lr: null,
+      start: "datasett",
+      datasett: "fordeling",
+      fordeling: "klassevalg",
+      klassevalg: "epoker",
+      epoker: "lr",
+      lr: null,
     };
 
     let visteTrinn = []; // Liste over alt vi har vist
 
     function leggTilForklaring(trinn) {
-    if (!visteTrinn.includes(trinn)) {
+      if (!visteTrinn.includes(trinn)) {
         visteTrinn.push(trinn);
-    }
-    oppdaterOrdbok();
+      }
+      oppdaterOrdbok();
     }
 
     function oppdaterOrdbok() {
-    const ordbokElement = document.getElementById("ordbok");
-    ordbokElement.innerHTML = `<p><strong>Introduksjon</strong><br>${introduksjon}</p><hr>`;
+      const ordbokElement = document.getElementById("ordbok");
+      ordbokElement.innerHTML = `<p><strong>Introduksjon</strong><br>${introduksjon}</p><hr>`;
 
-    visteTrinn.forEach((t, index) => {
+      visteTrinn.forEach((t, index) => {
         if (forklaringer[t]) {
-        ordbokElement.innerHTML += `<p><strong>${
+          ordbokElement.innerHTML += `<p><strong>${
             index + 1
-        }. ${oversettTrinnNavn(t)}</strong><br>${forklaringer[t]}</p>`;
+          }. ${oversettTrinnNavn(t)}</strong><br>${forklaringer[t]}</p>`;
         }
-    });
+      });
     }
 
     function oversettTrinnNavn(trinn) {
-    const navn = {
+      const navn = {
         datasett: "Datasett",
         fordeling: "Fordeling trening/test",
         klassevalg: "Valg av klasser",
         epoker: "Antall epoker",
         lr: "Læringsrate",
-    };
-    return navn[trinn] || trinn;
+      };
+      return navn[trinn] || trinn;
     }
 
     window.onload = function () {
-    leggTilForklaring("datasett"); // Start med Datasett forklaring aktiv
+      leggTilForklaring("datasett"); // Start med Datasett forklaring aktiv
     };
-</script>
-{% endblock %}
+  </script>
+  {% endblock %}
+</div>
